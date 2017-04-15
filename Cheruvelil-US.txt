@@ -1,0 +1,3 @@
+1. As a player, I want checkpoints so I won't have to repeat gameplay when I die.
+2. As a player, I want a health bar for my enemies so that I know how close I am to defeating them.
+3. As a player, I want an interesting and expansive story so that I can stay engrossed in the game.

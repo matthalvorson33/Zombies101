@@ -1,0 +1,3 @@
+1. The system shall display a health bar for all of the enemies.
+2. The system shall dispaly an ammo count when a gun is equipped.
+3. The system shall have the 3 different difficulty levels for the user to choose from.
