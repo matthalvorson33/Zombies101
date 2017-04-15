@@ -1,0 +1,3 @@
+The system shall allow the user's character to jump.
+The system shall display a title screen upon start up.
+The system shall allow the user three lives before the game ends.
