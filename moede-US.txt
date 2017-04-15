@@ -1,0 +1,6 @@
+As a player, I want to be able to save my high score so that I can improve.
+
+As a gamer, I want a storyline that changes based on user input choices so that I can play through the game how I want.
+
+As a gamer, I want to customize my main character in the game so that the game feels personal to me.
+
