@@ -1,0 +1,3 @@
+The system shall have more than 3 levels.
+The system shall change the storyline in response to the character's choices.
+The system shall always display the player's combat statistics. 
