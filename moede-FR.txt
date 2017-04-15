@@ -4,9 +4,4 @@ The system shall display a title screen with clickable ‘start’ and ‘instru
 
 The system shall save the user’s game data every time the user crosses a checkpoint flag while playing.
 
-The system shall pause the current game and display a menu that contains one clickable ‘exit’ button when the user presses the ‘escape’ key.
-
-The system shall display an instructions page* if the user clicks on the ‘instructions’ button from the title page.
-
-*requirements for the instructions page would be explained in a different FR
 
