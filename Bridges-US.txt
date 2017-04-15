@@ -1,0 +1,3 @@
+As a gamer, I want character customization, so I can make my character how I choose.
+As a gamer, I want unlockable items, so I can try to collect them.
+As a gamer, I want a world map, so that I can feel immersed in the game world.
