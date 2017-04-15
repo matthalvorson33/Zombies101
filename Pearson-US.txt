@@ -1,0 +1,7 @@
+User Stories
+
+1. As a beginning player, I want to be able to tap a location to move so that controls are intuitive.
+
+2. As a beginning player, I want interactable items to glow so that I know I can interact with them.
+
+3. As a beginning player, I want to be able to click on items to interact with them so that I don't have trouble figuring out how to interactive with items.

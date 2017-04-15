@@ -1,0 +1,11 @@
+Functional Requirements
+
+1. The system shall invite users to join our official forum every 7 days.
+
+2. The system shall provide a puase menu that allows the user to quit, save and quit, or open a help menu.
+
+3. The system shall display the player's health and ammo.
+
+4. The system shall provide an increasing number of enemies on each level.
+
+5. The system shall provide stronger enemies each level.
