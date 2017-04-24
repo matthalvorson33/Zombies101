@@ -1,0 +1,6 @@
+Tina Rickard
+Functional Requirements
+
+1. The system shall allow user movement in 4 directions.
+2. The system shall display the user's health points at all times during gameplay.
+3. The system shall outline enemies in red at all times during gameplay.

@@ -1,0 +1,6 @@
+Tina Rickard
+User Stories
+
+1. As a gamer, I want the enemies outlined in red at all times during gameplay, so that I can identify them easily.
+2. As a gamer, I want to be able to move in 4 directions, so that I can get around.
+3. As a gamer, I want to a customizable player character, so that I feel more immersed.
