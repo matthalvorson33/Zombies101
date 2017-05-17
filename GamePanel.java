@@ -175,7 +175,7 @@ class GamePanel extends JPanel implements ActionListener {
 	}
 
 	void setZombies(Graphics g2d) {
-		g2d.drawImage(zombies, 700, 0, null); // first Zombie
-		g2d.drawImage(zombies, 1200, 0, null); // second Zombie
+		g2d.drawImage(zombies, 2200 - bk_x, 600, 200, 200, null); // first Zombie
+		g2d.drawImage(zombies, 3200 - bk_x, 600, 200, 200, null); // second Zombie
 	}
 }
