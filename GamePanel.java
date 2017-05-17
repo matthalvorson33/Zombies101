@@ -7,14 +7,14 @@ import java.util.*;
 class GamePanel extends JPanel implements ActionListener {
 
 	// Creating images for single objects
-	protected Image rz_background = new ImageIcon("Images\\library.png").getImage(); // Background Image
-	protected Image rz_still_right = new ImageIcon("Images\\player.png").getImage(); // Standing still
-	protected Image rz_still_left = new ImageIcon("Images\\playerleft.png").getImage(); // Walking left
-	protected Image rz_walk_left2 = new ImageIcon("Images\\player.png").getImage(); //
-	protected Image rz_walk_right2 = new ImageIcon("Images\\playerright.png").getImage(); // Walking right
-	protected Image rz_jump_right = new ImageIcon("Images\\playerjump.png").getImage(); // Jumping
-	protected Image rz_jump_left = new ImageIcon("Images\\playerjump.png").getImage(); //
-	protected Image zombies = new ImageIcon("Images\\zombieleft.png").getImage(); // pipe
+	protected Image rz_background = new ImageIcon("images\\library.png").getImage(); // Background Image
+	protected Image rz_still_right = new ImageIcon("images\\player.png").getImage(); // Standing still
+	protected Image rz_still_left = new ImageIcon("images\\playerleft.png").getImage(); // Walking left
+	protected Image rz_walk_left2 = new ImageIcon("images\\player.png").getImage(); //
+	protected Image rz_walk_right2 = new ImageIcon("images\\playerright.png").getImage(); // Walking right
+	protected Image rz_jump_right = new ImageIcon("images\\playerjump.png").getImage(); // jumping
+	protected Image rz_jump_left = new ImageIcon("images\\playerjump.png").getImage(); //
+	protected Image zombies = new ImageIcon("images\\zombieleft.png").getImage(); // pipe
 
 	Image obj = rz_still_right; // Temporary Image reference
 
@@ -102,12 +102,10 @@ class GamePanel extends JPanel implements ActionListener {
 		setZombies(g2d);
 
 		// checking jump collision and enemy death
-		Jump();
+		jump();
 
-		if (rz_y == 615 & direction != 3 & direction != 2) // to turn razmazio
-															// in normal still
-															// state after jump
-		{
+      //to turn razmazio in normal still state after jump
+		if (rz_y == 615 & direction != 3 & direction != 2) {
 			if (obj == rz_jump_left)
 				obj = rz_still_left;
 			if (obj == rz_jump_right)
@@ -120,7 +118,7 @@ class GamePanel extends JPanel implements ActionListener {
 
 	// /////////////////////////////// DIRECTION CONDITIONS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 	
-	void Jump() // Jump mechanism
+	void jump() // jump mechanism
 	{
 
 		if (moveableDown == true) {
