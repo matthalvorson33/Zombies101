@@ -38,6 +38,10 @@ class GamePanel extends JPanel implements ActionListener {
 	static boolean pause = false;
 	int run = 0;
 
+   //Collections
+   ArrayList<Zombie> zombies = new ArrayList<Zombie>();
+   ArrayList<Bullet> bullets = new ArrayList<Bullet>();
+
 	GamePanel() {
 		setLayout(null);
 		time = new Timer(30, this); // starting a timer and passing the
@@ -86,8 +90,28 @@ class GamePanel extends JPanel implements ActionListener {
 		if (direction == 3)
 			left();
 
+      checkCollisions();
 		// repaint(); //repaint after 30ms
 	}
+
+   public void checkCollisions() {
+      for (Bullet bullet : bullets) {
+         if (player.getHitbox().intersects(bullet.getHitbox())) {
+            bullets.remove(bullet); //this might not work..might need to index loop and remove that way
+            player.decrementHealth(); //this needs to be added too
+         }
+         
+         for (Zombie zombie : zombies) {
+            if (zombie.getHitbox().intersects(bullet.getHitbox())) {
+               zombie.decrementHealth(); //add this too
+               if (zombie.getHealth() == 0) {
+                  zombies.remove(zombie);
+               }
+            }
+         }
+
+      }
+   }
 
 	// ////////////////////////////////// PAINT FUNCTION \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 	public void paintComponent(Graphics g) {
