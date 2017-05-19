@@ -7,4 +7,6 @@ public interface Moveable {
     * @Param y Delta for y position
     */
    public void move(int x, int y);
+
+   public Rectangle getHitbox();
 }
