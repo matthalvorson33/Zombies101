@@ -15,8 +15,8 @@ public abstract class Moveable
     /**
      * Allows for movement
      *
-     * @Param x Delta for x position
-     * @Param y Delta for y position
+     * @param x Delta for x position
+     * @param y Delta for y position
      */
     public void move(int x, int y)
     {
