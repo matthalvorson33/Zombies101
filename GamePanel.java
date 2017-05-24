@@ -14,14 +14,14 @@ import javax.swing.Timer;
 class GamePanel extends JPanel implements ActionListener
 {
     // Creating images for single objects
-    protected Image rz_background = new ImageIcon("images/library.png").getImage(); // Background Image
-    protected Image rz_still_right = new ImageIcon("images/player.png").getImage(); // Standing still
-    protected Image rz_still_left = new ImageIcon("images/playerleft.png").getImage(); // Walking left
-    protected Image rz_walk_left2 = new ImageIcon("images/player.png").getImage(); //
-    protected Image rz_walk_right2 = new ImageIcon("images/playerright.png").getImage(); // Walking right
-    protected Image rz_jump_right = new ImageIcon("images/playerjump.png").getImage(); // jumping
-    protected Image rz_jump_left = new ImageIcon("images/playerjump.png").getImage(); //
-    protected Image zombieImage = new ImageIcon("images/zombieleft.png").getImage(); // pipe
+    private final Image rz_background = new ImageIcon("images/library.png").getImage(); // Background Image
+    private final Image rz_still_right = new ImageIcon("images/player.png").getImage(); // Standing still
+    private final Image rz_still_left = new ImageIcon("images/playerleft.png").getImage(); // Walking left
+    private final Image rz_walk_left2 = new ImageIcon("images/player.png").getImage(); //
+    private final Image rz_walk_right2 = new ImageIcon("images/playerright.png").getImage(); // Walking right
+    private final Image rz_jump_right = new ImageIcon("images/playerjump.png").getImage(); // jumping
+    private final Image rz_jump_left = new ImageIcon("images/playerjump.png").getImage(); //
+    private final Image zombieImage = new ImageIcon("images/zombieleft.png").getImage(); // pipe
 
     Image obj = rz_still_right; // Temporary Image reference
 
@@ -91,11 +91,11 @@ class GamePanel extends JPanel implements ActionListener
             {
                 if (player.getDirection() == 2)
                 {
-                    obj = rz_still_right; // if direction is right
+                    player.setImage(rz_still_right); // if direction is right
                 }
                 if (player.getDirection() == 3)
                 {
-                    obj = rz_still_left; // if direction is left
+                    player.setImage(rz_still_left); // if direction is left
                 }
                 player.setDirection(0); // set still image
             }
@@ -161,16 +161,16 @@ class GamePanel extends JPanel implements ActionListener
         //to turn razmazio in normal still state after jump
         if (player.getYPos() == 615 & player.getDirection() != 3 & player.getDirection() != 2)
         {
-            if (obj == rz_jump_left)
+            if (player.getImage() == rz_jump_left)
             {
-                obj = rz_still_left;
+                player.setImage(rz_still_left);
             }
-            if (obj == rz_jump_right)
+            if (player.getImage() == rz_jump_right)
             {
-                obj = rz_still_right;
+                player.setImage(rz_still_right);
             }
         }
-        g2d.drawImage(obj, player.getXPos(), player.getYPos(), 200, 200, this); // Drawing the character image
+        g2d.drawImage(player.getImage(), player.getXPos(), player.getYPos(), 200, 200, this); // Drawing the character image
         repaint();
     }
 
@@ -184,11 +184,11 @@ class GamePanel extends JPanel implements ActionListener
             {
                 if (jumpright == true)
                 {
-                    obj = rz_jump_right;
+                    player.setImage(rz_jump_right);
                 }
                 else
                 {
-                    obj = rz_jump_left;
+                    player.setImage(rz_jump_left);
                 }
 
                 player.move(0, -1);
@@ -201,11 +201,11 @@ class GamePanel extends JPanel implements ActionListener
             {
                 if (jumpright == true)
                 {
-                    obj = rz_jump_right;
+                    player.setImage(rz_jump_right);
                 }
                 else
                 {
-                    obj = rz_jump_left;
+                    player.setImage(rz_jump_left);
                 }
                 player.move(0, 1);
             }
@@ -221,11 +221,11 @@ class GamePanel extends JPanel implements ActionListener
 
             if (run % 3 == 0 | run % 5 == 0)
             {
-                obj = rz_still_left; // set image
+                player.setImage(rz_still_left); // set image
             }
             else
             {
-                obj = rz_walk_left2;
+                player.setImage(rz_walk_left2);
             }
             run++;
         }
@@ -236,15 +236,7 @@ class GamePanel extends JPanel implements ActionListener
         if (moveableRight == true & bk_x < BKMAX_X - 800)
         {
             bk_x += 8; // increasing xcoord while moving right
-
-            if (run % 3 == 0 | run % 5 == 0)
-            {
-                obj = rz_still_right;
-            }
-            else
-            {
-                obj = rz_walk_right2;
-            }
+            player.setImage(rz_walk_right2);
             run++;
         }// end if
     }// end right
