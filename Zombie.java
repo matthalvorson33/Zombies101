@@ -13,10 +13,14 @@ import java.awt.Rectangle;
 public class Zombie extends Moveable
 {
     int lives = 3;
+    int speed;
+    int updown;
 
-    public Zombie(int x, int y)
+    public Zombie(int x, int y, int speed_num)
     {
         super(x, y);
+        speed = speed_num;
+        updown = 1;
     }
 
     @Override
@@ -34,6 +38,16 @@ public class Zombie extends Moveable
     public int getLives()
     {
         return lives;
+    }
+    
+    public int getSpeed()
+    {
+    	return speed;
+    }
+    
+    public int getUpdown()
+    {
+    	return updown;
     }
 
 }
