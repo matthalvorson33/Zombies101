@@ -1,4 +1,5 @@
 
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -27,8 +28,13 @@ class GamePanel extends JPanel implements ActionListener
     private final Image rz_jump_left = new ImageIcon("images/playerjump.png").getImage(); //
     private final Image zombieImage = new ImageIcon("images/zombieleft.png").getImage(); // pipe
     private final Image playerhurt = new ImageIcon("images/playerhurt.png").getImage(); // hurt player
-    private final Image bulletImage = new ImageIcon("images/bullet.png").getImage(); // pew pew
     
+    private final Image bulletImage = new ImageIcon("images/bullet.png").getImage(); // pew pew
+    private final Image gun1 = new ImageIcon("images/gun1.png").getImage(); // pew pew
+    private final Image shotgun = new ImageIcon("images/shotgun.png").getImage(); // pew pew
+    
+    
+    int gun = 1; // keeps track of gun type
    
 
     Image obj = rz_still_right; // Temporary Image reference
@@ -49,11 +55,13 @@ class GamePanel extends JPanel implements ActionListener
     static boolean pause = false;
     int run = 0;
 
-    Player player = new Player(600, 615);
+    Player player = new Player(300, 615);
 
     //Collections
     ArrayList<Zombie> zombies = new ArrayList<Zombie>();
     ArrayList<Bullet> bullets = new ArrayList<Bullet>();
+    ArrayList<Integer> ammo = new ArrayList<Integer>(); //keeps track of ammo left for each gun
+
 
     GamePanel()
     {
@@ -62,8 +70,10 @@ class GamePanel extends JPanel implements ActionListener
         // actionlistener for the running animation
         time.start(); // starting
         System.out.println("hello");
+        
         initZombies();
-
+        initGuns();
+        
         addKeyListener(new KeyAdapter() // Movement
         {
             public void keyPressed(KeyEvent kp)
@@ -98,6 +108,10 @@ class GamePanel extends JPanel implements ActionListener
                 if(kp.getKeyCode() == KeyEvent.VK_SHIFT)
                 {
                 	shoot();
+                }
+                if(kp.getKeyCode() == KeyEvent.VK_C)
+                {
+                	toggle_gun();
                 }
             } // end keyPressed
 
@@ -169,10 +183,6 @@ class GamePanel extends JPanel implements ActionListener
         	{
         		System.out.println("ouch ");
         	}
-        	else
-        	{
-        		//System.out.println("ok ");
-        	}
         }
     }
 
@@ -206,6 +216,8 @@ class GamePanel extends JPanel implements ActionListener
             }
         }
         g2d.drawImage(player.getImage(), player.getXPos(), player.getYPos(), 200, 200, this); // Drawing the character image
+        drawGun(g2d);
+        drawAmmo(g2d);
         repaint();
     }
 
@@ -286,11 +298,36 @@ class GamePanel extends JPanel implements ActionListener
     
     void shoot()
     {
-    	Bullet b = new Bullet(player.getXPos()+200, player.getYPos());
-    	bullets.add(b);
+    	if(gun == 0) // gun 1
+    	{
+    		int ammoGun1 = ammo.get(0);
+    		if(ammoGun1 > 0) //if there's ammo left
+    		{
+    			Bullet b = new Bullet(player.getXPos()+200, player.getYPos(), 1);
+            	bullets.add(b);
+            	ammo.set(0, ammoGun1 -1);  // update ammo
+    		}
+    		
+    	}
+    	else if (gun == 1) //shotgun
+    	{
+    		int ammoShotgun = ammo.get(1);
+    		if(ammoShotgun > 0)  // if there's ammo left
+    		{
+    			Bullet b1 = new Bullet(player.getXPos()+200, player.getYPos(), 1);
+            	bullets.add(b1);
+            	Bullet b2 = new Bullet(player.getXPos()+200, player.getYPos(), 2);
+            	bullets.add(b2);
+            	Bullet b3 = new Bullet(player.getXPos()+200, player.getYPos(), 3);
+            	bullets.add(b3);
+            	ammo.set(1, ammoShotgun -1);  // update ammo
+    		}
+    		
+    	}
+    	
     }
 
-    // ////////////////////////////////////// SETTER FUNCTIONS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    // ////////////////////////////////////// DRAW FUNCTIONS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     void setBackground(Graphics g2d)
     {
         g2d.drawImage(rz_background, 700 - bk_x, 0, null); // Drawing background relative to character
@@ -306,6 +343,29 @@ class GamePanel extends JPanel implements ActionListener
         //g2d.drawImage(zombieImage, 3200 - bk_x, 600, 200, 200, null); // second Zombie
     }
     
+    
+    // ///////////////////////////////////// WEAPON FUNCTIONS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    
+    void initGuns()
+    {
+        setFont(new java.awt.Font("Veranda", 1, 24));
+    	ammo.add(50); //gun1
+        ammo.add(20); //shotgun
+    }
+    
+    void drawGun(Graphics g2d)
+    {
+    	if(gun == 0) //gun 1
+    	{
+    		g2d.drawImage(gun1, player.getXPos() + 200, player.getYPos(), 50, 50, null);		
+    	}
+    	else if (gun == 1) // shotgun
+    	{
+    		g2d.drawImage(shotgun, player.getXPos() + 100, player.getYPos(), 150, 50, null);
+    	    
+    	}
+    }
+    
     void drawBullets(Graphics g2d)
     {
     	for(Bullet b: bullets)
@@ -318,10 +378,33 @@ class GamePanel extends JPanel implements ActionListener
     {
     	for(Bullet b: bullets)
     	{
-    		b.move(30, 0);
+    		if(b.getType() == 1) // straight
+    		{
+    			b.move(30, 0);	
+    		}
+    		else if (b.getType() == 2) // angle up
+    		{
+    			b.move(30,  -2);
+    		}
+    		else if (b.getType() == 3) // angle down
+    		{
+    			b.move(30, 2);
+    		}
     	}
     }
     
+    void toggle_gun()
+    {
+    	gun = (gun+1) % 2;
+    }
+    
+    void drawAmmo(Graphics g2d)
+    {
+    	String str = "Ammo: " + Integer.toString(ammo.get(gun));
+    	g2d.drawString(str, 30, 30);
+    }
+    
+ // ///////////////////////////////////// ZOMBIE FUNCTIONS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     void initZombies()
     {
         Zombie z1 = new Zombie(1200, 600, rand.nextInt(20) + 10);
