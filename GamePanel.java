@@ -55,7 +55,6 @@ class GamePanel extends JPanel implements ActionListener
     private Timer time;
 
     static boolean pause = false;
-    int run = 0;
 
     Player player = new Player(300, 615);
 
@@ -73,7 +72,6 @@ class GamePanel extends JPanel implements ActionListener
         time = new Timer(30, this); // starting a timer and passing the
         // actionlistener for the running animation
         time.start(); // starting
-        System.out.println("hello");
         
         initZombies();
         initGuns();
@@ -147,10 +145,6 @@ class GamePanel extends JPanel implements ActionListener
         }
 
         spitTimer++;
-        System.out.println("Incrementing");
-        System.out.println("Timer = " + spitTimer);
-        System.out.println("Max = " + spitMax);
-
         if (spitTimer == spitMax)
         {
            if (zombies.size() != 0)
@@ -288,17 +282,8 @@ class GamePanel extends JPanel implements ActionListener
     {
         if (moveableLeft == true & bk_x > BKMIN_X)
         {
-            bk_x -= 8; // decrease xcoord while moving left
-
-            if (run % 3 == 0 | run % 5 == 0)
-            {
-                player.setImage(rz_still_left); // set image
-            }
-            else
-            {
-                player.setImage(rz_walk_left2);
-            }
-            run++;
+            bk_x -= 8; // increasing xcoord while moving right
+            player.setImage(rz_still_left);
             for(Zombie z : zombies)
             {
             	z.move(8, 0);
@@ -312,7 +297,6 @@ class GamePanel extends JPanel implements ActionListener
         {
             bk_x += 8; // increasing xcoord while moving right
             player.setImage(rz_walk_right2);
-            run++;
             for(Zombie z : zombies)
             {
             	z.move(-8, 0);
