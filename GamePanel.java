@@ -68,7 +68,7 @@ class GamePanel extends JPanel implements ActionListener
     public GamePanel()
     {
         spitTimer = 0;
-        spitMax = 200;
+        spitMax = 100;
         setLayout(null);
         time = new Timer(30, this); // starting a timer and passing the
         // actionlistener for the running animation
@@ -153,7 +153,8 @@ class GamePanel extends JPanel implements ActionListener
 
         if (spitTimer == spitMax)
         {
-            zombieShoot(0);
+           if (zombies.size() != 0)
+               zombieShoot(0);
             spitTimer = 0;
             spitMax = rand.nextInt(75) + 25;
         }
