@@ -37,6 +37,7 @@ class GamePanel extends JPanel implements ActionListener
     
     int gun = 1; // keeps track of gun type
    
+    int spitMax, spitTimer;
 
     Image obj = rz_still_right; // Temporary Image reference
 
@@ -64,8 +65,10 @@ class GamePanel extends JPanel implements ActionListener
     ArrayList<Integer> ammo = new ArrayList<Integer>(); //keeps track of ammo left for each gun
 
 
-    GamePanel()
+    public GamePanel()
     {
+        spitTimer = 0;
+        spitMax = 200;
         setLayout(null);
         time = new Timer(30, this); // starting a timer and passing the
         // actionlistener for the running animation
@@ -143,10 +146,29 @@ class GamePanel extends JPanel implements ActionListener
             left();
         }
 
+        spitTimer++;
+        System.out.println("Incrementing");
+        System.out.println("Timer = " + spitTimer);
+        System.out.println("Max = " + spitMax);
+
+        if (spitTimer == spitMax)
+        {
+            zombieShoot(0);
+            spitTimer = 0;
+            spitMax = rand.nextInt(75) + 25;
+        }
+
         checkCollisions();
         moveZombies();
         moveBullets();
         // repaint(); //repaint after 30ms
+    }
+
+    public void zombieShoot(int ind)
+    {
+      Zombie shooter = zombies.get(ind);
+    	Bullet b = new Bullet(shooter.getXPos()+10, shooter.getYPos() + 25, 4);
+      bullets.add(b);
     }
 
     public void checkCollisions()
@@ -165,7 +187,7 @@ class GamePanel extends JPanel implements ActionListener
             while(zombie_iter.hasNext())
             {
             	Zombie zombie = zombie_iter.next();
-                if (zombie.getHitbox().intersects(bullet.getHitbox()))
+                if (zombie.getHitbox().intersects(bullet.getHitbox()) && bullet.getType() != 4)
                 {
                 	iter.remove();
                     zombie.decrementHealth();
