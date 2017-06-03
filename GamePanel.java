@@ -28,6 +28,7 @@ class GamePanel extends JPanel implements ActionListener
     private final Image rz_jump_left = new ImageIcon("images/playerjump.png").getImage(); //
     private final Image zombieImage = new ImageIcon("images/zombieleft.png").getImage(); // pipe
     private final Image playerhurt = new ImageIcon("images/playerhurt.png").getImage(); // hurt player
+    private final Image spitImage = new ImageIcon("images/spitImage.png").getImage(); // zombie bullet
     
     private final Image bulletImage = new ImageIcon("images/bullet.png").getImage(); // pew pew
     private final Image gun1 = new ImageIcon("images/gun1.png").getImage(); // pew pew
@@ -303,7 +304,7 @@ class GamePanel extends JPanel implements ActionListener
     		int ammoGun1 = ammo.get(0);
     		if(ammoGun1 > 0) //if there's ammo left
     		{
-    			Bullet b = new Bullet(player.getXPos()+200, player.getYPos(), 1);
+    			Bullet b = new Bullet(player.getXPos()+200, player.getYPos() + 75, 1);
             	bullets.add(b);
             	ammo.set(0, ammoGun1 -1);  // update ammo
     		}
@@ -314,11 +315,11 @@ class GamePanel extends JPanel implements ActionListener
     		int ammoShotgun = ammo.get(1);
     		if(ammoShotgun > 0)  // if there's ammo left
     		{
-    			Bullet b1 = new Bullet(player.getXPos()+200, player.getYPos(), 1);
+    			Bullet b1 = new Bullet(player.getXPos()+200, player.getYPos() + 75, 1);
             	bullets.add(b1);
-            	Bullet b2 = new Bullet(player.getXPos()+200, player.getYPos(), 2);
+            	Bullet b2 = new Bullet(player.getXPos()+200, player.getYPos() + 75, 2);
             	bullets.add(b2);
-            	Bullet b3 = new Bullet(player.getXPos()+200, player.getYPos(), 3);
+            	Bullet b3 = new Bullet(player.getXPos()+200, player.getYPos() + 75, 3);
             	bullets.add(b3);
             	ammo.set(1, ammoShotgun -1);  // update ammo
     		}
@@ -355,14 +356,13 @@ class GamePanel extends JPanel implements ActionListener
     
     void drawGun(Graphics g2d)
     {
-    	if(gun == 0) //gun 1
+    	if(gun == 0) //handgun
     	{
-    		g2d.drawImage(gun1, player.getXPos() + 200, player.getYPos(), 50, 50, null);		
+    		g2d.drawImage(gun1, player.getXPos() + 175, player.getYPos() + 75, 50, 50, null);		
     	}
     	else if (gun == 1) // shotgun
     	{
-    		g2d.drawImage(shotgun, player.getXPos() + 100, player.getYPos(), 150, 50, null);
-    	    
+    		g2d.drawImage(shotgun, player.getXPos() + 175, player.getYPos() + 75, 150, 50, null);
     	}
     }
     
@@ -370,7 +370,13 @@ class GamePanel extends JPanel implements ActionListener
     {
     	for(Bullet b: bullets)
     	{
-    		g2d.drawImage(bulletImage, b.getXPos(), b.getYPos(), 40, 20, null);
+         if (b.getType() == 4)
+         {
+            g2d.drawImage(spitImage, b.getXPos(), b.getYPos(), 40, 20, null);
+         }
+         else {
+    		   g2d.drawImage(bulletImage, b.getXPos(), b.getYPos(), 40, 20, null);
+         }
     	}
     }
     
