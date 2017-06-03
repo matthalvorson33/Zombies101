@@ -349,7 +349,7 @@ class GamePanel extends JPanel implements ActionListener
     void initGuns()
     {
         setFont(new java.awt.Font("Veranda", 1, 24));
-    	ammo.add(50); //gun1
+        ammo.add(50); //gun1
         ammo.add(20); //shotgun
     }
     
@@ -390,6 +390,10 @@ class GamePanel extends JPanel implements ActionListener
     		{
     			b.move(30, 2);
     		}
+         else if (b.getType() == 4) //zombie bullet
+         {
+            b.move (-30, 0);
+         }
     	}
     }
     
@@ -427,7 +431,7 @@ class GamePanel extends JPanel implements ActionListener
     		}
     		else
     		{
-    			z.move(0, z.getSpeed()*1);
+    			z.move(0, z.getSpeed());
     			if(z.getYPos() > 585)
     			{
     				z.updown = 1;

@@ -3,10 +3,11 @@ import java.awt.Rectangle;
 
 public class Bullet extends Moveable
 {
-	int type;
 	/* Gun types: 1 = straight
 				  2 = angle up 
-				  3 = angle down*/
+				  3 = angle down
+              4 = shoot left (Zombie bullet)*/
+	int type;
 	
     public Bullet(int x, int y, int t)
     {
