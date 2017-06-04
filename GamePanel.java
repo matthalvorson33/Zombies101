@@ -45,6 +45,8 @@ class GamePanel extends JPanel implements ActionListener
     public int bk_x = 695; // background x and y coordinates
     public int bk_y = 800;
 
+    public int score = 1000;
+
     static boolean moveableRight = true; // variable for collision detection
     static boolean moveableLeft = true;
     static boolean moveableDown = false;
@@ -172,6 +174,12 @@ class GamePanel extends JPanel implements ActionListener
     	while(iter.hasNext())
     	{
     		Bullet bullet = iter.next();
+            
+            if(bullet.getXPos() > BKMAX_X)
+            {
+               iter.remove();
+            }
+            
             if (player.getHitbox().intersects(bullet.getHitbox()))
             {
                 iter.remove(); 
@@ -189,6 +197,7 @@ class GamePanel extends JPanel implements ActionListener
                     if (zombie.getLives() == 0)
                     {
                         zombie_iter.remove();
+                        score += 100;
                     }
                 }
             }
@@ -236,6 +245,7 @@ class GamePanel extends JPanel implements ActionListener
         g2d.drawImage(player.getImage(), player.getXPos(), player.getYPos(), 200, 200, this); // Drawing the character image
         drawGun(g2d);
         drawAmmo(g2d);
+        drawScore(g2d);
         repaint();
     }
 
@@ -314,7 +324,8 @@ class GamePanel extends JPanel implements ActionListener
     			Bullet b = new Bullet(player.getXPos()+200, player.getYPos() + 75, 1);
             	bullets.add(b);
             	ammo.set(0, ammoGun1 -1);  // update ammo
-    		}
+    		   score -= 10;
+         }
     		
     	}
     	else if (gun == 1) //shotgun
@@ -329,7 +340,8 @@ class GamePanel extends JPanel implements ActionListener
             	Bullet b3 = new Bullet(player.getXPos()+200, player.getYPos() + 75, 3);
             	bullets.add(b3);
             	ammo.set(1, ammoShotgun -1);  // update ammo
-    		}
+    		   score -= 10;
+         }
     		
     	}
     	
@@ -421,6 +433,12 @@ class GamePanel extends JPanel implements ActionListener
     	g2d.drawString(str, 30, 30);
     }
     
+    void drawScore(Graphics g2d)
+    {
+      String str = "Score: " + Integer.toString(score);
+      g2d.drawString(str, 200, 30);
+    }
+
  // ///////////////////////////////////// ZOMBIE FUNCTIONS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     void initZombies()
     {
