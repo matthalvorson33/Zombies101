@@ -1,0 +1,3 @@
+As a player, I want to buy different types of weapons, so that I can have different fighting tactics.
+As a player, I want to see my exp, so that I can keep track of my level.
+As a pro-player, I want to have a hardcore game mode, so that I can challenge myself.
