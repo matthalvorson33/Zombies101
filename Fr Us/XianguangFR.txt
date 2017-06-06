@@ -1,0 +1,6 @@
+Xianguang Yan
+The system shall display experience points.
+The system shall preview weapon looks.
+The system shall display a control layout.
+The system shall display the current location.
+The system shall display the number of zombies remaining.
