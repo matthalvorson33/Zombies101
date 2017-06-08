@@ -1,4 +1,4 @@
-
+package game;
 import java.awt.Image;
 import java.awt.Rectangle;
 import javax.swing.ImageIcon;
@@ -12,6 +12,7 @@ public class Player extends Moveable
     int lives;
 
     Image curImage;
+    int imageNum;
 
     int direction = 0; // 0=still 1=up , 2=right , 3=left , 4=down
 
@@ -20,6 +21,7 @@ public class Player extends Moveable
         super(x, y);
         lives = 5;
         curImage = new ImageIcon("images/player.png").getImage(); //init pic to standing facing right
+        imageNum = 0;
     }
 
     @Override
@@ -54,6 +56,16 @@ public class Player extends Moveable
         return curImage;
     }
 
+    public int getImageNum()
+    {
+    	return imageNum;
+    }
+    
+    public void setImageNum(int num)
+    {
+    	imageNum = num;
+    }
+    
     public void setImage(Image image)
     {
         curImage = image;

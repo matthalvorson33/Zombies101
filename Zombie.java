@@ -1,4 +1,4 @@
-
+package game;
 import java.awt.Rectangle;
 
 /*

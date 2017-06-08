@@ -1,4 +1,4 @@
-
+package game;
 import java.awt.Rectangle;
 
 //This interface is for all objects that can move

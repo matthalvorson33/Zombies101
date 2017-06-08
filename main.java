@@ -17,14 +17,16 @@ public class main extends JFrame
         boolean done = false;
 		while(done == false){
 			System.out.print("");
-        	if (menu.getPlay()) {
+        	if (menu.getPlay()) 
+        	{
         		remove(menu);
         		add(gp);
         		revalidate();
         		repaint();
         		done = true;
         	}
-        	else if(menu.getExit()) {
+        	else if(menu.getExit()) 
+        	{
         		dispose();
         		close = true;
         	}

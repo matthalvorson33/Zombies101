@@ -1,4 +1,4 @@
-
+package game;
 public class Projectile
 {
    //TODO find box class to add to use for collisions. Will look at kid's projects from last summer to find them.

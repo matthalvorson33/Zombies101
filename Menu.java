@@ -2,6 +2,7 @@ package game;
 
 
 import javax.imageio.ImageIO;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -65,8 +66,10 @@ public class Menu extends JPanel {
 		
 		container.add(panel1);
 		container.add(panel2);**/
+		
+		
 		try {
-			img = ImageIO.read(new File("/home/tmula/workspace/Zombies101/src/game/images/zombies101.png"));
+			img = ImageIO.read(new File("images/zombies101.png"));
 		}catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -77,7 +80,7 @@ public class Menu extends JPanel {
 		 play.setAlignmentX(CENTER_ALIGNMENT);
 		 play.setAlignmentY(CENTER_ALIGNMENT);
 		 play.setPreferredSize(new Dimension(150, 150));
-		 add(play);
+
 		 play.addActionListener(new ActionListener() {
 	      public void actionPerformed(ActionEvent e)
 	      {
@@ -89,7 +92,7 @@ public class Menu extends JPanel {
 		 exit.setAlignmentX(CENTER_ALIGNMENT);
 		 exit.setAlignmentY(CENTER_ALIGNMENT);
 		 exit.setPreferredSize(new Dimension(100, 150));
-		 add(exit);
+
 		 exit.addActionListener(new ActionListener() {
 		      public void actionPerformed(ActionEvent e)
 		      {
@@ -97,10 +100,15 @@ public class Menu extends JPanel {
 		        exitGame = true;
 		      }
 		    });
+		 
+		 add(play);
+		 add(Box.createRigidArea(new Dimension(0, 40)));
+		 add(exit);
 		container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
 		container.setVisible(true);
 		revalidate();
 		repaint();
+		
 	}
 	
 	//Regular button
@@ -118,7 +126,7 @@ public class Menu extends JPanel {
 	    {              
 		super.paintComponent(g);
 		  Image image=new ImageIcon("images/zombies101.png").getImage();  
-	      g.drawImage(image,0,0,this);
+	      g.drawImage(image,0,0,null);
 	    }  
 	}
 	
