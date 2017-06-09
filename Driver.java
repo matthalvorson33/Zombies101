@@ -18,8 +18,8 @@ public class Driver extends JFrame
         setSize(1024, 900);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
-        boolean done = true;
-		while(!close){
+        boolean done = close;
+		while(!done){
 			
         	if (menu.getPlay()) 
         	{
