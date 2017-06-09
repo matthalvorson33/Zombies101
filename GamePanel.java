@@ -79,65 +79,69 @@ public class GamePanel extends JPanel implements ActionListener
         initGuns();
         initBoxes();
 
-        addKeyListener(newAdapter());
+        addKeyListener(new keyAdapter());
     }// end constructor
     
-    public KeyAdapter newAdapter() {
-    	new KeyAdapter() // Movement
+    public class keyAdapter extends KeyAdapter {
+    	@Override
+        public void keyPressed(KeyEvent kp)
         {
-           @Override
-            public void keyPressed(KeyEvent kp)
-            {
+    		int key = kp.getKeyCode();
 
-                if (kp.getKeyCode() == KeyEvent.VK_RIGHT
-                        && moveableRight)
-                {
-                    player.setDirection(2);// right
-                }
-                if ((kp.getKeyCode() == KeyEvent.VK_LEFT)
-                        && moveableLeft)
-                {
-                    player.setDirection(3); // left
-                }
-                if (kp.getKeyCode() == KeyEvent.VK_SPACE && !jump && player.getYPos() == 615)
-                {
-                     jump = !jump;
-                     moveableDown = jump;
-                     if (player.getDirection() == 2)
-                     {
-                         jumpright = true;
-                     }
-                     if (player.getDirection() == 3)
-                     {
-                         jumpright = false;
-                     }
-                }
-                if (kp.getKeyCode() == KeyEvent.VK_SHIFT)
-                {
-                    shoot();
-                }
-                if (kp.getKeyCode() == KeyEvent.VK_C)
-                {
-                    toggleGun();
-                }
-            } // end keyPressed
-
-            @Override
-            public void keyReleased(KeyEvent kr)
-            {
-                if (player.getDirection() == 2)
-                {
-                    player.setImage(stillRight); // if direction is right
-                    player.setImageNum(0);
-                }
-                if (player.getDirection() == 3)
-                {
-                    player.setImage(stillLeft); // if direction is left
-                    player.setImageNum(1);
-                }
-                player.setDirection(0); // set still image
+    		switch (key) {
+    		case KeyEvent.VK_RIGHT:
+    			if (moveableRight)
+    				player.setDirection(2);
+    			break;
+    		case KeyEvent.VK_LEFT:
+    			if (moveableLeft)
+    				player.setDirection(3);
+    			break;
+    		case KeyEvent.VK_SHIFT:
+    			shoot();
+    			break;
+    		case KeyEvent.VK_C:
+    			toggleGun();
+    			break;
+    		case KeyEvent.VK_SPACE:
+    			swap();
+    			break;
+    		default:
+    			break;
+    		}
+        }
+    		private void swap() {
+	            if (!jump && player.getYPos() == 615)
+	            {
+	                 jump = !jump;
+	                 moveableDown = jump;
+	                 if (player.getDirection() == 2)
+	                 {
+	                     jumpright = true;
+	                 }
+	                 if (player.getDirection() == 3)
+	                 {
+	                     jumpright = false;
+	                 }
+	            }
             }
-        };// end anonymous class and KeyListener
+        } // end keyPressed
+
+        @Override
+        public void keyReleased(KeyEvent kr)
+        {
+            if (player.getDirection() == 2)
+            {
+                player.setImage(stillRight); // if direction is right
+                player.setImageNum(0);
+            }
+            if (player.getDirection() == 3)
+            {
+                player.setImage(stillLeft); // if direction is left
+                player.setImageNum(1);
+            }
+            player.setDirection(0); // set still image
+        }
     }
 
     // ///////////////////////////// TIMED ACTION LISTENER \\\\\\\\\\\\\\\\\\\\\\\
