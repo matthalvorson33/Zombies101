@@ -60,7 +60,7 @@ public class DifficultyChange extends JPanel {
 		
 		
 		try {
-			img = ImageIO.read(new File("/home/tmula/workspace/Zombies1010/src/images/difficulty.png"));
+			img = ImageIO.read(new File("images/difficulty.png"));
 		}catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

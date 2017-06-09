@@ -64,7 +64,7 @@ public class Menu extends JPanel {
 		
 		
 		try {
-			img = ImageIO.read(new File("/home/tmula/workspace/Zombies1010/src/images/zombies101.png"));
+			img = ImageIO.read(new File("images/zombies101.png"));
 		}catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
