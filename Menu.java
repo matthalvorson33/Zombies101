@@ -44,7 +44,7 @@ public class Menu extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
-		g.drawImage(img, 0, 0, this);
+		g2d.drawImage(img, 0, 0, this);
 	}
 	public boolean getPlay() {
 		return playGame;
@@ -90,6 +90,7 @@ public class Menu extends JPanel {
 			img = ImageIO.read(new File("images/zombies101.png"));
 		}catch (IOException e) {
 			// TODO Auto-generated catch block
+			throw new IOException(e);
 			e.printStackTrace();
 		}
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
