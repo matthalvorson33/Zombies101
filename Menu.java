@@ -21,7 +21,7 @@ import java.io.IOException;
 @SuppressWarnings("unused")
 public class Menu extends JPanel {
 	private int widthUsed;
-	private int height;
+	private int heightUsed;
 	public static final int SCALE = 3;
 	public static final String NAME = "Zombies101";
 	private transient BufferedImage img;
@@ -40,6 +40,7 @@ public class Menu extends JPanel {
 	public boolean getExit() {
 		return exitGame;
 	}
+	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
@@ -48,10 +49,17 @@ public class Menu extends JPanel {
 	public boolean getPlay() {
 		return playGame;
 	}
+	public int getPixelDepth(int w, int h){
+		int pixelWidth = w;
+		int pixelHeight = h;
+		return pixelWidth*pixelHeight;
+	}
 	
 	public void createMenu()
 	{
 		widthUsed = SCALE;
+		heightUsed = SCALE;
+		getPixelDepth(widthUsed, heightUsed);
 		container = new backgroundPanel();
 		container.setAlignmentX(CENTER_ALIGNMENT);
 		container.setAlignmentY(CENTER_ALIGNMENT);
