@@ -16,6 +16,7 @@ public class Driver extends JFrame
         setVisible(true);
         boolean done = false;
 		while(!done){
+         System.out.print("");
         	if (menu.getPlay()) 
         	{
         		remove(menu);
