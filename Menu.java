@@ -20,11 +20,11 @@ import java.io.File;
 import java.io.IOException;
 @SuppressWarnings("unused")
 public class Menu extends JPanel {
-	private int width;
+	private int widthUsed;
 	private int height;
 	public static final int SCALE = 3;
 	public static final String NAME = "Zombies101";
-	private BufferedImage img;
+	private final transient BufferedImage img;
 	protected backgroundPanel container;
 	public boolean playGame;
 	public boolean exitGame;
@@ -51,6 +51,7 @@ public class Menu extends JPanel {
 	
 	public void createMenu()
 	{
+		widthUsed = SCALE;
 		container = new backgroundPanel();
 		container.setAlignmentX(CENTER_ALIGNMENT);
 		container.setAlignmentY(CENTER_ALIGNMENT);
