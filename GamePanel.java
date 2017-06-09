@@ -470,7 +470,7 @@ public class GamePanel extends JPanel implements ActionListener
         for (Bullet b : bullets)
         {
            int type = b.getType();
-           switch(type)
+           switch(type) {
               //straight
                case 1:
                 if (b.getDir() == 0)
@@ -509,6 +509,7 @@ public class GamePanel extends JPanel implements ActionListener
                break;
             default:
                break;
+			  }
         }
     }
 
