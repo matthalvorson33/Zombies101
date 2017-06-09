@@ -19,10 +19,7 @@ public class Driver extends JFrame
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
         boolean done = true;
-	if(done) {
-		done = false;
-		}
-		while(done){
+		while(!close){
 			
         	if (menu.getPlay()) 
         	{
