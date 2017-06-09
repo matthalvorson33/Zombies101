@@ -2,9 +2,9 @@ package game;
 
 import java.awt.Rectangle;
 
-public class Ammo_Box extends Moveable {
+public class AmmoBox extends Moveable {
 
-    public Ammo_Box(int x, int y)
+    public AmmoBox(int x, int y)
     {
         super(x, y);
     }
