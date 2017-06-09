@@ -23,11 +23,12 @@ public class DifficultyChange extends JPanel {
 	public static final String NAME = "Zombies101";
 	private transient BufferedImage img;
 	protected BackgroundPanel container;
-	private boolean playGame = false;
+	private boolean playGame;
 	private boolean clicked;
 	private String difficulty;
 	public DifficultyChange(){
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		playGame = false;
 	}
 	
 	public String getDifficulty() {
