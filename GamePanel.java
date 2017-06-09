@@ -19,27 +19,26 @@ public class GamePanel extends JPanel implements ActionListener
 {
     Random rand = new Random();
     // Creating images for single objects
-    private final Image rz_background = new ImageIcon("images/lib_long.png").getImage(); // Background Image
-    private final Image rz_still_right = new ImageIcon("images/player.png").getImage(); // Standing still
-    private final Image rz_still_left = new ImageIcon("images/playerleft.png").getImage(); // Walking left
-    private final Image rz_walk_left2 = new ImageIcon("images/player.png").getImage(); //
-    private final Image rz_walk_right2 = new ImageIcon("images/playerright.png").getImage(); // Walking right
-    private final Image rz_jump = new ImageIcon("images/playerjump.png").getImage(); // jumping
-    private final Image zombieImage = new ImageIcon("images/zombieleft.png").getImage(); // pipe
-    private final Image playerhurt = new ImageIcon("images/playerhurt.png").getImage(); // hurt player
-    private final Image spitImage = new ImageIcon("images/spitImage.png").getImage(); // zombie bullet
+    private transient final Image background = new ImageIcon("images/lib_long.png").getImage(); // Background Image
+    private transient final Image stillRight = new ImageIcon("images/player.png").getImage(); // Standing still
+    private transient final Image stillLeft = new ImageIcon("images/playerleft.png").getImage(); // Walking left
+    private transient final Image walkLeft = new ImageIcon("images/player.png").getImage(); //
+    private transient final Image walkRight = new ImageIcon("images/playerright.png").getImage(); // Walking right
+    private transient final Image jumpImg = new ImageIcon("images/playerjump.png").getImage(); // jumping
+    private transient final Image zombieImage = new ImageIcon("images/zombieleft.png").getImage(); // pipe
+    private transient final Image spitImage = new ImageIcon("images/spitImage.png").getImage(); // zombie bullet
 
-    private final Image bulletImage = new ImageIcon("images/bullet.png").getImage(); // pew pew <-- Solid, useful comments here. Good work.
-    private final Image gun1 = new ImageIcon("images/gun1_right.png").getImage(); // pew pew
-    private final Image shotgun = new ImageIcon("images/shotgun_right.png").getImage(); // pew pew
-    private final Image gun1_right = new ImageIcon("images/gun1.png").getImage(); // pew pew
-    private final Image shotgun_right = new ImageIcon("images/shotgun.png").getImage(); // pew pew
+    private transient final Image bulletImage = new ImageIcon("images/bullet.png").getImage(); // pew pew <-- Solid, useful comments here. Good work.
+    private transient final Image gun1 = new ImageIcon("images/gun1Right.png").getImage(); // pew pew
+    private transient final Image shotgun = new ImageIcon("images/shotgunRight.png").getImage(); // pew pew
+    private transient final Image gun1Right = new ImageIcon("images/gun1.png").getImage(); // pew pew
+    private transient final Image shotgunRight = new ImageIcon("images/shotgun.png").getImage(); // pew pew
 
     int gun = 1; // keeps track of gun type
 
     int spitMax, spitTimer;
 
-    Image obj = rz_still_right; // Temporary Image reference
+    transient Image obj = stillRight; // Temporary Image reference
 
     final private int BKMIN_X = 900, BKMAX_X = 10800; // Min and Max of background
     public int bk_x = 695; // background x and y coordinates
@@ -81,16 +80,17 @@ public class GamePanel extends JPanel implements ActionListener
 
         addKeyListener(new KeyAdapter() // Movement
         {
+           @Override
             public void keyPressed(KeyEvent kp)
             {
 
                 if (kp.getKeyCode() == KeyEvent.VK_RIGHT
-                        & moveableRight == true)
+                        && moveableRight == true)
                 {
                     player.setDirection(2);// right
                 }
                 if ((kp.getKeyCode() == KeyEvent.VK_LEFT)
-                        & moveableLeft == true)
+                        && moveableLeft == true)
                 {
                     player.setDirection(3); // left
                 }
@@ -120,16 +120,17 @@ public class GamePanel extends JPanel implements ActionListener
                 }
             } // end keyPressed
 
+            @Override
             public void keyReleased(KeyEvent kr)
             {
                 if (player.getDirection() == 2)
                 {
-                    player.setImage(rz_still_right); // if direction is right
+                    player.setImage(stillRight); // if direction is right
                     player.setImageNum(0);
                 }
                 if (player.getDirection() == 3)
                 {
-                    player.setImage(rz_still_left); // if direction is left
+                    player.setImage(stillLeft); // if direction is left
                     player.setImageNum(1);
                 }
                 player.setDirection(0); // set still image
@@ -138,6 +139,7 @@ public class GamePanel extends JPanel implements ActionListener
     }// end constructor
 
     // ///////////////////////////// TIMED ACTION LISTENER \\\\\\\\\\\\\\\\\\\\\\\
+    @Override
     public void actionPerformed(ActionEvent e)
     {
         if (player.getDirection() == 2)
@@ -213,13 +215,13 @@ public class GamePanel extends JPanel implements ActionListener
 
             if (player.getHitbox().intersects(zombie.getHitbox()))
             {
-                System.out.println("ouch ");
                 player.decrementHealth();
             }
         }
     }
 
     // ////////////////////////////////// PAINT FUNCTION \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    @Override
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
@@ -239,16 +241,14 @@ public class GamePanel extends JPanel implements ActionListener
         //to turn razmazio in normal still state after jump
         if (player.getYPos() == 615 & player.getDirection() != 3 & player.getDirection() != 2)
         {
-            if (player.getImage() == rz_jump && player.getImageNum() == 1)
+            if (player.getImage() == jumpImg && player.getImageNum() == 1)
             {
-                System.out.println("setting to still left");
-                player.setImage(rz_still_left);
+                player.setImage(stillLeft);
                 player.setImageNum(1);
             }
-            if (player.getImage() == rz_jump && player.getImageNum() == 2)
+            if (player.getImage() == jumpImg && player.getImageNum() == 2)
             {
-                System.out.println("setting to still right");
-                player.setImage(rz_still_right);
+                player.setImage(stillRight);
                 player.setImageNum(0);
             }
         }
@@ -281,12 +281,12 @@ public class GamePanel extends JPanel implements ActionListener
             {
                 if (jumpright == true)
                 {
-                    player.setImage(rz_jump);
+                    player.setImage(jumpImg);
                     player.setImageNum(2);
                 }
                 else
                 {
-                    player.setImage(rz_jump);
+                    player.setImage(jumpImg);
                     player.setImageNum(1);
                 }
 
@@ -296,16 +296,16 @@ public class GamePanel extends JPanel implements ActionListener
                     jump = false;
                 }
             }
-            if (jump == false & player.getYPos() < 615) // For downward motion during jump
+            if (jump == false && player.getYPos() < 615) // For downward motion during jump
             {
                 if (jumpright == true)
                 {
-                    player.setImage(rz_jump);
+                    player.setImage(jumpImg);
                     player.setImageNum(2);
                 }
                 else
                 {
-                    player.setImage(rz_jump);
+                    player.setImage(jumpImg);
                     player.setImageNum(1);
                 }
                 player.move(0, 2);
@@ -316,10 +316,10 @@ public class GamePanel extends JPanel implements ActionListener
 
     void left()
     {
-        if (moveableLeft == true & bk_x > BKMIN_X)
+        if (moveableLeft == true && bk_x > BKMIN_X)
         {
             bk_x -= 8; // increasing xcoord while moving right
-            player.setImage(rz_still_left);
+            player.setImage(stillLeft);
             player.setImageNum(1);
             for (Zombie z : zombies)
             {
@@ -330,10 +330,10 @@ public class GamePanel extends JPanel implements ActionListener
 
     void right()
     {
-        if (moveableRight == true & bk_x < BKMAX_X - 800)
+        if (moveableRight == true && bk_x < BKMAX_X - 800)
         {
             bk_x += 8; // increasing xcoord while moving right
-            player.setImage(rz_walk_right2);
+            player.setImage(walkRight);
             player.setImageNum(2);
             for (Zombie z : zombies)
             {
@@ -399,7 +399,7 @@ public class GamePanel extends JPanel implements ActionListener
     // ////////////////////////////////////// DRAW FUNCTIONS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     void setBackground(Graphics g2d)
     {
-        g2d.drawImage(rz_background, 700 - bk_x, 0, null); // Drawing background relative to character
+        g2d.drawImage(background, 700 - bk_x, 0, null); // Drawing background relative to character
     }
 
     void setZombies(Graphics g2d)
@@ -432,7 +432,7 @@ public class GamePanel extends JPanel implements ActionListener
             }
             else // draw right gun
             {
-                g2d.drawImage(gun1_right, player.getXPos() + 175, player.getYPos() + 75, 50, 50, null);
+                g2d.drawImage(gun1Right, player.getXPos() + 175, player.getYPos() + 75, 50, 50, null);
             }
 
         }
@@ -444,7 +444,7 @@ public class GamePanel extends JPanel implements ActionListener
             }
             else  //draw right gun
             {
-                g2d.drawImage(shotgun_right, player.getXPos() + 175, player.getYPos() + 75, 150, 50, null);
+                g2d.drawImage(shotgunRight, player.getXPos() + 175, player.getYPos() + 75, 150, 50, null);
             }
         }
     }
@@ -559,7 +559,6 @@ public class GamePanel extends JPanel implements ActionListener
 
     public void setZombieNum(int num)
     {
-        System.out.println("num = " + num);
         if (num < zombies.size())
         {
             int cycles = zombies.size() - num;
