@@ -54,7 +54,8 @@ public class Menu extends JPanel {
 		container.setAlignmentY(CENTER_ALIGNMENT);
 		container.setPreferredSize(new Dimension(640, 480));
 		playGame = false;
-		/**JPanel panel1 = new JPanel();
+		/**Old used Code - In Menu
+		 * Neglect JPanel panel1 = new JPanel();
 		JPanel panel2 = new JPanel();
 		
 		container.add(panel1);
