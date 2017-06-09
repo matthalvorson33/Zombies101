@@ -24,6 +24,7 @@ public class Bullet extends Moveable
     
     public int getDir()
     {
+    	System.out.println("heyoooo");
     	return direction;
     }
     
