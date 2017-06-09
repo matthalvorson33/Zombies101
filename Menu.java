@@ -25,8 +25,8 @@ public class Menu extends JPanel {
 	public static final String NAME = "Zombies101";
 	private transient BufferedImage img;
 	protected backgroundPanel container;
-	public boolean playGame;
-	public boolean exitGame;
+	public static boolean playGame;
+	public static boolean exitGame;
 	public Menu(){
 		JPanel panel1 = new JPanel();
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -65,7 +65,8 @@ public class Menu extends JPanel {
 		try {
 			img = ImageIO.read(new File("images/zombies101.png"));
 		}catch (IOException e) {
-			e.printStackTrace();
+			//LOGGER.info(e);
+			//e.printStackTrace();
          throw new IOException();
 		}
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
