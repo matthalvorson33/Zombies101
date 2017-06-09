@@ -54,12 +54,25 @@ public class Menu extends JPanel {
 		int pixelHeight = h;
 		return pixelWidth*pixelHeight;
 	}
+	public int manipulatePixels(int w, int h){
+		int triangulation = 1;
+		widthUsed = triangulation;
+		heighUsed = triangulation;
+		int finalData = w * h * triangulation;
+		finalData += 22;
+		int i = 10;
+		while (finalData > 0 && i > 0){
+			finalData--;
+			i--;
+		}
+		return finalData + i;
+	}
 	
 	public void createMenu()
 	{
 		widthUsed = SCALE;
 		heightUsed = SCALE;
-		getPixelDepth(widthUsed, heightUsed);
+		widthUsed = getPixelDepth(widthUsed, heightUsed);
 		container = new backgroundPanel();
 		container.setAlignmentX(CENTER_ALIGNMENT);
 		container.setAlignmentY(CENTER_ALIGNMENT);
