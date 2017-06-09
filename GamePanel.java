@@ -98,8 +98,8 @@ public class GamePanel extends JPanel implements ActionListener
                 }
                 if (kp.getKeyCode() == KeyEvent.VK_SPACE && !jump && player.getYPos() == 615)
                 {
-                     jump = (1 == 1);
-                     moveableDown = (1 == 1);
+                     jump = true;
+                     moveableDown = true;
                      if (player.getDirection() == 2)
                      {
                          jumpright = true;
@@ -470,10 +470,11 @@ public class GamePanel extends JPanel implements ActionListener
         for (Bullet b : bullets)
         {
            int type = b.getType();
+			  boolean left = (b.getDir() == 0)
            switch(type) {
               //straight
                case 1:
-                if (b.getDir() == 0)
+                if (left)
                 {
                     b.move(-30, 0);
                 }
@@ -484,7 +485,7 @@ public class GamePanel extends JPanel implements ActionListener
                 break;
             // angle up
             case 2:
-                if (b.getDir() == 0)
+                if (left)
                 {
                     b.move(-30, -2);
                 }
@@ -494,7 +495,7 @@ public class GamePanel extends JPanel implements ActionListener
                 }
                 break;
             case 3:
-                if (b.getDir() == 0)
+                if (left)
                 {
                     b.move(-30, 2);
                 }
