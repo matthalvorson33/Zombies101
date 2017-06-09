@@ -73,6 +73,7 @@ public class Menu extends JPanel {
 		widthUsed = SCALE;
 		heightUsed = SCALE;
 		widthUsed = getPixelDepth(widthUsed, heightUsed);
+		heightUsed = manipulatePixels(2, 3);
 		container = new backgroundPanel();
 		container.setAlignmentX(CENTER_ALIGNMENT);
 		container.setAlignmentY(CENTER_ALIGNMENT);
