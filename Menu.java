@@ -21,11 +21,11 @@ import java.io.IOException;
 
 @SuppressWarnings("unused")
 public class Menu extends JPanel {
-	private int width;
-	private int height;
+	//private int width;
+	//private int height;
 	public static final int SCALE = 3;
 	public static final String NAME = "Zombies101";
-	private BufferedImage img;
+	private transient BufferedImage img;
 	protected backgroundPanel container;
 	public boolean playGame;
 	public boolean exitGame;
@@ -37,10 +37,11 @@ public class Menu extends JPanel {
 	public boolean getExit() {
 		return exitGame;
 	}
+   @Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
-		g.drawImage(img, 0, 0, this);
+		g2d.drawImage(img, 0, 0, this);
 	}
 	public boolean getPlay() {
 		return playGame;
@@ -63,8 +64,8 @@ public class Menu extends JPanel {
 		try {
 			img = ImageIO.read(new File("images/zombies101.png"));
 		}catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+         throw new IOException();
 		}
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		add(container);
@@ -74,6 +75,8 @@ public class Menu extends JPanel {
 		 play.setPreferredSize(new Dimension(150, 150));
 
 		 play.addActionListener(new ActionListener() {
+
+         @Override
 	      public void actionPerformed(ActionEvent e)
 	      {
 	        // display/center the jdialog when the button is pressed
@@ -86,6 +89,7 @@ public class Menu extends JPanel {
 		 exit.setPreferredSize(new Dimension(100, 150));
 
 		 exit.addActionListener(new ActionListener() {
+          @Override
 		      public void actionPerformed(ActionEvent e)
 		      {
 		        // display/center the jdialog when the button is pressed
