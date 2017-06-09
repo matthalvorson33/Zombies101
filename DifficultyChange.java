@@ -23,9 +23,9 @@ public class DifficultyChange extends JPanel {
 	public static final String NAME = "Zombies101";
 	private transient BufferedImage img;
 	protected BackgroundPanel container;
-	public boolean playGame = false;
-	public boolean clicked;
-	public String difficulty;
+	private boolean playGame = false;
+	private boolean clicked;
+	private String difficulty;
 	public DifficultyChange(){
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 	}
@@ -51,7 +51,6 @@ public class DifficultyChange extends JPanel {
 		try {
 			img = ImageIO.read(new File("images/difficulty.png"));
 		}catch (IOException e) {
-			e.printStackTrace();
 			throw new IOException(e);
 		}
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
