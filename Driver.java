@@ -19,8 +19,8 @@ public class Driver extends JFrame
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
         boolean done = false;
-		while(done == false){
-			System.out.print("");
+		while(done){
+			
         	if (menu.getPlay()) 
         	{
         		remove(menu);
@@ -35,8 +35,8 @@ public class Driver extends JFrame
         		add(difficulty);
         		revalidate();
         		repaint();
-        		while (difficulty.getClicked() == false) {
-        			System.out.print("");
+        		while (difficulty.getClicked()) {
+        			close = false;
         		}
         		difficulty.clicked = false;
         		menu.difficultychange = false;
