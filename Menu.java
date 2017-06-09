@@ -25,10 +25,9 @@ public class Menu extends JPanel {
 	public static final String NAME = "Zombies101";
 	private transient BufferedImage img;
 	protected backgroundPanel container;
-	public boolean playGame;
-	public boolean exitGame;
+	public static boolean playGame;
+	public static boolean exitGame;
 	public Menu(){
-		JPanel panel1 = new JPanel();
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 	}
 	// Display Exit Code	
@@ -54,14 +53,8 @@ public class Menu extends JPanel {
 		container.setAlignmentY(CENTER_ALIGNMENT);
 		container.setPreferredSize(new Dimension(640, 480));
 		playGame = false;
-		/**Old used Code - In Menu
-		 * Neglect JPanel panel1 = new JPanel();
-		JPanel panel2 = new JPanel();
-		
-		container.add(panel1);
-		container.add(panel2);**/
-		
-		
+
+		//The Following is a Try and Catch Expression	
 		try {
 			img = ImageIO.read(new File("images/zombies101.png"));
 		}catch (IOException e) {
@@ -111,7 +104,7 @@ public class Menu extends JPanel {
 	//Regular button
 	
 	//Button with an icon
-	public void addButton(String name, JPanel p, String imgURL){
+	public void addButton(String name, JPanel p){
 		 JButton button = new JButton(name);
 		 p.add(button);
 	}
