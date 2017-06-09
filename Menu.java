@@ -21,8 +21,6 @@ import java.io.IOException;
 
 @SuppressWarnings("unused")
 public class Menu extends JPanel {
-	//private int width;
-	//private int height;
 	public static final int SCALE = 3;
 	public static final String NAME = "Zombies101";
 	private transient BufferedImage img;
@@ -33,20 +31,22 @@ public class Menu extends JPanel {
 		JPanel panel1 = new JPanel();
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 	}
-	
+	// Display Exit Code	
 	public boolean getExit() {
 		return exitGame;
 	}
+	//Paint and Draw Component
    @Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.drawImage(img, 0, 0, this);
 	}
+	//Run Code
 	public boolean getPlay() {
 		return playGame;
 	}
-	
+	//Menu
 	public void createMenu()
 	{
 		container = new backgroundPanel();
