@@ -4,9 +4,11 @@ package game;
 import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 
 import java.awt.Button;
 import java.awt.Dimension;
@@ -19,37 +21,31 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 @SuppressWarnings("unused")
-public class Menu extends JPanel {
+public class DifficultyChange extends JPanel {
 	private int width;
 	private int height;
 	public static final int SCALE = 3;
 	public static final String NAME = "Zombies101";
 	private BufferedImage img;
 	protected backgroundPanel container;
-	public boolean playGame;
-	public boolean exitGame;
-	public boolean difficultychange = false;
-	public Menu(){
+	public boolean playGame = false;
+	public boolean clicked;
+	public String difficulty;
+	public DifficultyChange(){
 		JPanel panel1 = new JPanel();
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 	}
 	
-	public boolean getDifficulty() {
-		return difficultychange;
-	}
-	public boolean getExit() {
-		return exitGame;
+	public String getDifficulty() {
+		return difficulty;
 	}
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		g.drawImage(img, 0, 0, this);
 	}
-	public boolean getPlay() {
-		return playGame;
-	}
 	
-	public void createMenu()
+	public void createDfficulty()
 	{
 		container = new backgroundPanel();
 		container.setAlignmentX(CENTER_ALIGNMENT);
@@ -64,62 +60,69 @@ public class Menu extends JPanel {
 		
 		
 		try {
-			img = ImageIO.read(new File("/home/tmula/workspace/Zombies1010/src/images/zombies101.png"));
+			img = ImageIO.read(new File("/home/tmula/workspace/Zombies1010/src/images/difficulty.png"));
 		}catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		add(container);
-		JButton play = new JButton("Play");
-		 play.setAlignmentX(CENTER_ALIGNMENT);
-		 play.setAlignmentY(CENTER_ALIGNMENT);
-		 play.setPreferredSize(new Dimension(150, 150));
+		 JRadioButton easy = new JRadioButton("Easy");
+		 easy.setAlignmentX(CENTER_ALIGNMENT);
+		 easy.setAlignmentY(CENTER_ALIGNMENT);
+		 easy.setPreferredSize(new Dimension(100, 150));
 
-		 play.addActionListener(new ActionListener() {
-	      public void actionPerformed(ActionEvent e)
-	      {
-	        // display/center the jdialog when the button is pressed
-	        playGame = true;
-	      }
-	    });
-		 
-		 JButton dif = new JButton("Change Difficulty");
-		 dif.setAlignmentX(CENTER_ALIGNMENT);
-		 dif.setAlignmentY(CENTER_ALIGNMENT);
-		 dif.setPreferredSize(new Dimension(150, 150));
-
-		 dif.addActionListener(new ActionListener() {
-	     public void actionPerformed(ActionEvent e)
-	      {
-	        // display/center the jdialog when the button is pressed
-	    	 difficultychange = true;
-	      }
-	    });
-		 
-		 JButton exit = new JButton("Exit");
-		 exit.setAlignmentX(CENTER_ALIGNMENT);
-		 exit.setAlignmentY(CENTER_ALIGNMENT);
-		 exit.setPreferredSize(new Dimension(100, 150));
-
-		 exit.addActionListener(new ActionListener() {
+		 easy.addActionListener(new ActionListener() {
 		      public void actionPerformed(ActionEvent e)
 		      {
 		        // display/center the jdialog when the button is pressed
-		        exitGame = true;
+		        difficulty = "easy";
+		        clicked = true;
 		      }
 		    });
-		 
-		 add(play);
+		 JRadioButton medium = new JRadioButton("medium");
+		 medium.setAlignmentX(CENTER_ALIGNMENT);
+		 medium.setAlignmentY(CENTER_ALIGNMENT);
+		 medium.setPreferredSize(new Dimension(100, 150));
+
+		 medium.addActionListener(new ActionListener() {
+		      public void actionPerformed(ActionEvent e)
+		      {
+		        // display/center the jdialog when the button is pressed
+		        difficulty = "medium";
+		        clicked = true;
+		      }
+		    });
+		 JRadioButton hard = new JRadioButton("Hard");
+		 hard.setAlignmentX(CENTER_ALIGNMENT);
+		 hard.setAlignmentY(CENTER_ALIGNMENT);
+		 hard.setPreferredSize(new Dimension(100, 150));
+
+		 hard.addActionListener(new ActionListener() {
+		      public void actionPerformed(ActionEvent e)
+		      {
+		        // display/center the jdialog when the button is pressed
+		        difficulty = "hard";
+		        clicked = true;
+		      }
+		    });
+		 ButtonGroup group = new ButtonGroup();
+		    group.add(easy);
+		    group.add(medium);
+		    group.add(hard);
+		 add(easy);
+		 add(medium);
+		 add(hard);
 		 add(Box.createRigidArea(new Dimension(0, 40)));
-		 add(dif);
-		 add(Box.createRigidArea(new Dimension(0, 40)));
-		 add(exit);
 		container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
 		container.setVisible(true);
 		revalidate();
 		repaint();
 		
+	}
+	
+	public boolean getClicked() {
+		return clicked;
 	}
 	
 	//Regular button
@@ -136,29 +139,9 @@ public class Menu extends JPanel {
 	    public void paintComponent(Graphics g)
 	    {              
 		super.paintComponent(g);
-		  Image image=new ImageIcon("images/zombies101.png").getImage();  
+		  Image image=new ImageIcon("").getImage();  
 	      g.drawImage(image,0,0,null);
 	    }  
 	}
 	
-	/**public JPanel getPanel()
-	{
-		return panel;
-	}
-	
-	//pass window width and height to class before you do anything
-	void getWindowSize(int w, int h) 
-	{
-		width = w;
-		height = h;
-	}
-	/**public static void main(String args[])
-	{
-		Menu menu = new Menu();
-		menu.frame.add(panel);
-		menu.frame.setLayout(null);
-		menu.frame.setVisible(true);
-		
-		
-	}**/
 }
