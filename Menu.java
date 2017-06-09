@@ -26,11 +26,11 @@ public class Menu extends JPanel {
 	public static final String NAME = "Zombies101";
 	private transient BufferedImage img;
 	protected backgroundPanel container;
-	public boolean playGame;
-	public boolean exitGame;
-	public boolean difficultychange = false;
+	private boolean playGame;
+	private boolean exitGame;
+	private boolean difficultychange = false;
 	public Menu(){
-		JPanel panel1 = new JPanel();
+		JPanel();
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 	}
 	
@@ -57,7 +57,7 @@ public class Menu extends JPanel {
 	public int manipulatePixels(int w, int h){
 		int triangulation = 1;
 		widthUsed = triangulation;
-		heighUsed = triangulation;
+		heightUsed = triangulation;
 		int finalData = w * h * triangulation;
 		finalData += 22;
 		int i = 10;
@@ -90,8 +90,8 @@ public class Menu extends JPanel {
 			img = ImageIO.read(new File("images/zombies101.png"));
 		}catch (IOException e) {
 			// TODO Auto-generated catch block
-			throw new IOException(e);
 			e.printStackTrace();
+			throw new IOException(e);
 		}
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		add(container);
@@ -101,6 +101,7 @@ public class Menu extends JPanel {
 		 play.setPreferredSize(new Dimension(150, 150));
 
 		 play.addActionListener(new ActionListener() {
+	      @Override
 	      public void actionPerformed(ActionEvent e)
 	      {
 	        // display/center the jdialog when the button is pressed
@@ -114,6 +115,7 @@ public class Menu extends JPanel {
 		 dif.setPreferredSize(new Dimension(150, 150));
 
 		 dif.addActionListener(new ActionListener() {
+		 @Override
 	     public void actionPerformed(ActionEvent e)
 	      {
 	        // display/center the jdialog when the button is pressed
@@ -127,6 +129,7 @@ public class Menu extends JPanel {
 		 exit.setPreferredSize(new Dimension(100, 150));
 
 		 exit.addActionListener(new ActionListener() {
+			 @Override
 		      public void actionPerformed(ActionEvent e)
 		      {
 		        // display/center the jdialog when the button is pressed
@@ -150,7 +153,8 @@ public class Menu extends JPanel {
 	
 	//Button with an icon
 	public void addButton(String name, JPanel p, String imgURL){
-		 JButton button = new JButton(name);
+	     imgURL = name;
+		 JButton button = new JButton(imgURL);
 		 p.add(button);
 	}
 	
