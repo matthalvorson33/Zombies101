@@ -33,7 +33,7 @@ public class Zombie extends Moveable
 
     public int generateNotion(int health, int damage){
     	int triangulation = health * damage;
-    	int finalValue = 0;
+    	int finalValue;
     	if (triangulation > 10){
     		triangulation++;
     		finalValue = triangulation;
