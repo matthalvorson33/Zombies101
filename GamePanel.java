@@ -19,20 +19,20 @@ public class GamePanel extends JPanel implements ActionListener
 {
     Random rand = new Random();
     // Creating images for single objects
-    private transient final Image background = new ImageIcon("images/lib_long.png").getImage(); // Background Image
-    private transient final Image stillRight = new ImageIcon("images/player.png").getImage(); // Standing still
-    private transient final Image stillLeft = new ImageIcon("images/playerleft.png").getImage(); // Walking left
-    private transient final Image walkLeft = new ImageIcon("images/player.png").getImage(); //
-    private transient final Image walkRight = new ImageIcon("images/playerright.png").getImage(); // Walking right
-    private transient final Image jumpImg = new ImageIcon("images/playerjump.png").getImage(); // jumping
-    private transient final Image zombieImage = new ImageIcon("images/zombieleft.png").getImage(); // pipe
-    private transient final Image spitImage = new ImageIcon("images/spitImage.png").getImage(); // zombie bullet
+    private final transient Image background = new ImageIcon("images/lib_long.png").getImage(); // Background Image
+    private final transient Image stillRight = new ImageIcon("images/player.png").getImage(); // Standing still
+    private final transient Image stillLeft = new ImageIcon("images/playerleft.png").getImage(); // Walking left
+    private final transient Image walkLeft = new ImageIcon("images/player.png").getImage(); //
+    private final transient Image walkRight = new ImageIcon("images/playerright.png").getImage(); // Walking right
+    private final transient Image jumpImg = new ImageIcon("images/playerjump.png").getImage(); // jumping
+    private final transient Image zombieImage = new ImageIcon("images/zombieleft.png").getImage(); // pipe
+    private final transient Image spitImage = new ImageIcon("images/spitImage.png").getImage(); // zombie bullet
 
-    private transient final Image bulletImage = new ImageIcon("images/bullet.png").getImage(); // pew pew <-- Solid, useful comments here. Good work.
-    private transient final Image gun1 = new ImageIcon("images/gun1Right.png").getImage(); // pew pew
-    private transient final Image shotgun = new ImageIcon("images/shotgunRight.png").getImage(); // pew pew
-    private transient final Image gun1Right = new ImageIcon("images/gun1.png").getImage(); // pew pew
-    private transient final Image shotgunRight = new ImageIcon("images/shotgun.png").getImage(); // pew pew
+    private final transient Image bulletImage = new ImageIcon("images/bullet.png").getImage(); // pew pew <-- Solid, useful comments here. Good work.
+    private final transient Image gun1 = new ImageIcon("images/gun1Right.png").getImage(); // pew pew
+    private final transient Image shotgun = new ImageIcon("images/shotgunRight.png").getImage(); // pew pew
+    private final transient Image gun1Right = new ImageIcon("images/gun1.png").getImage(); // pew pew
+    private final transient Image shotgunRight = new ImageIcon("images/shotgun.png").getImage(); // pew pew
 
     int gun = 1; // keeps track of gun type
 
