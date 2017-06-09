@@ -17,10 +17,10 @@ public class Zombie extends Moveable
     int speed;
     int updown;
 
-    public Zombie(int x, int y, int speed_num)
+    public Zombie(int x, int y, int speedNum)
     {
         super(x, y);
-        speed = speed_num;
+        speed = speedNum;
         updown = 1;
     }
 
