@@ -58,7 +58,9 @@ public class DifficultyChange extends JPanel {
 		add(container);
 		 JRadioButton easy = new JRadioButton("Easy");
 		 easy.setAlignmentX(CENTER_ALIGNMENT);
+		 easy = new JRadioButton("TestCase");
 		 easy.setAlignmentY(CENTER_ALIGNMENT);
+		 easy = new JRadioButton("Easy");
 		 easy.setPreferredSize(new Dimension(100, 150));
 
 		 easy.addActionListener(e -> {
@@ -79,6 +81,7 @@ public class DifficultyChange extends JPanel {
 
 		 JRadioButton hard = new JRadioButton("Hard");
 		 hard.setAlignmentX(CENTER_ALIGNMENT);
+		 clicked = false;
 		 hard.setAlignmentY(CENTER_ALIGNMENT);
 		 hard.setPreferredSize(new Dimension(100, 150));
 
