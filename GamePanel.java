@@ -40,11 +40,11 @@ public class GamePanel extends JPanel implements ActionListener
 
     transient Image obj = stillRight; // Temporary Image reference
 
-    final private int BKMIN_X = 900, BKMAX_X = 10800; // Min and Max of background
-    public int bk_x = 695; // background x and y coordinates
-    public int bk_y = 800;
+    private static final int BackgroundMinX = 900, BackgroundMaxX = 10800; // Min and Max of background
+    private int backgroundX = 695; // background x and y coordinates
+    private int backgroundY = 800;
 
-    public int score = 1000;
+    private int score = 1000;
 
     static boolean moveableRight = true; // variable for collision detection
     static boolean moveableLeft = true;
@@ -62,10 +62,10 @@ public class GamePanel extends JPanel implements ActionListener
     Player player = new Player(300, 615);
 
     //Collections
-    ArrayList<Zombie> zombies = new ArrayList<Zombie>();
-    ArrayList<Bullet> bullets = new ArrayList<Bullet>();
-    ArrayList<Integer> ammo = new ArrayList<Integer>(); //keeps track of ammo left for each gun
-    ArrayList<Ammo_Box> boxes = new ArrayList<Ammo_Box>();
+    ArrayList<Zombie> zombies = new ArrayList<>();
+    ArrayList<Bullet> bullets = new ArrayList<>();
+    ArrayList<Integer> ammo = new ArrayList<>(); //keeps track of ammo left for each gun
+    ArrayList<Ammo_Box> boxes = new ArrayList<>();
     
     public GamePanel()
     {
@@ -87,18 +87,18 @@ public class GamePanel extends JPanel implements ActionListener
             {
 
                 if (kp.getKeyCode() == KeyEvent.VK_RIGHT
-                        && moveableRight == true)
+                        && moveableRight)
                 {
                     player.setDirection(2);// right
                 }
                 if ((kp.getKeyCode() == KeyEvent.VK_LEFT)
-                        && moveableLeft == true)
+                        && moveableLeft)
                 {
                     player.setDirection(3); // left
                 }
                 if (kp.getKeyCode() == KeyEvent.VK_SPACE)
                 {
-                    if (jump == false & player.getYPos() == 615)
+                    if (!jump && player.getYPos() == 615)
                     {
                         jump = true;
                         moveableDown = true;
@@ -156,7 +156,7 @@ public class GamePanel extends JPanel implements ActionListener
         spitTimer++;
         if (spitTimer == spitMax)
         {
-            if (zombies.size() != 0)
+            if (!zombies.isEmpty())
             {
                 zombieShoot(0);
             }
@@ -184,7 +184,7 @@ public class GamePanel extends JPanel implements ActionListener
         {
             Bullet bullet = iter.next();
 
-            if (bullet.getXPos() > BKMAX_X)
+            if (bullet.getXPos() > BackgroundMaxX)
             {
                 iter.remove();
             }
@@ -195,17 +195,17 @@ public class GamePanel extends JPanel implements ActionListener
                 player.decrementHealth();
             }
 
-            Iterator<Zombie> zombie_iter = zombies.iterator();
-            while (zombie_iter.hasNext())
+            Iterator<Zombie> zombieIterator = zombies.iterator();
+            while (zombieIterator.hasNext())
             {
-                Zombie zombie = zombie_iter.next();
+                Zombie zombie = zombieIterator.next();
                 if (zombie.getHitbox().intersects(bullet.getHitbox()) && bullet.getType() != 4)
                 {
                     iter.remove();
                     zombie.decrementHealth();
                     if (zombie.getLives() == 0)
                     {
-                        zombie_iter.remove();
+                        zombieIterator.remove();
                         score += 100;
                     }
                 }
@@ -278,11 +278,11 @@ public class GamePanel extends JPanel implements ActionListener
     void jump() // jump mechanism
     {
 
-        if (moveableDown == true)
+        if (moveableDown)
         {
-            if (jump == true & player.getYPos() >= 450) // For upward motion during jump
+            if (jump && player.getYPos() >= 450) // For upward motion during jump
             {
-                if (jumpright == true)
+                if (jumpright)
                 {
                     player.setImage(jumpImg);
                     player.setImageNum(2);
@@ -299,9 +299,9 @@ public class GamePanel extends JPanel implements ActionListener
                     jump = false;
                 }
             }
-            if (jump == false && player.getYPos() < 615) // For downward motion during jump
+            if (!jump && player.getYPos() < 615) // For downward motion during jump
             {
-                if (jumpright == true)
+                if (jumpright)
                 {
                     player.setImage(jumpImg);
                     player.setImageNum(2);
@@ -319,9 +319,9 @@ public class GamePanel extends JPanel implements ActionListener
 
     void left()
     {
-        if (moveableLeft == true && bk_x > BKMIN_X)
+        if (moveableLeft && backgroundX > BackgroundMinX)
         {
-            bk_x -= 8; // increasing xcoord while moving right
+            backgroundX -= 8; // increasing xcoord while moving right
             player.setImage(stillLeft);
             player.setImageNum(1);
             for (Zombie z : zombies)
@@ -333,9 +333,9 @@ public class GamePanel extends JPanel implements ActionListener
 
     void right()
     {
-        if (moveableRight == true && bk_x < BKMAX_X - 800)
+        if (moveableRight && backgroundX < BackgroundMaxX - 800)
         {
-            bk_x += 8; // increasing xcoord while moving right
+            backgroundX += 8; // increasing xcoord while moving right
             player.setImage(walkRight);
             player.setImageNum(2);
             for (Zombie z : zombies)
@@ -402,7 +402,7 @@ public class GamePanel extends JPanel implements ActionListener
     // ////////////////////////////////////// DRAW FUNCTIONS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     void setBackground(Graphics g2d)
     {
-        g2d.drawImage(background, 700 - bk_x, 0, null); // Drawing background relative to character
+        g2d.drawImage(background, 700 - backgroundX, 0, null); // Drawing background relative to character
     }
 
     void setZombies(Graphics g2d)
@@ -413,8 +413,8 @@ public class GamePanel extends JPanel implements ActionListener
             zombiesDrawn++;
             g2d.drawImage(zombieImage, z.getXPos(), z.getYPos(), 200, 200, null);
         }
-        //g2d.drawImage(zombieImage, 1200 - bk_x, 600, 200, 200, null); // first Zombie
-        //g2d.drawImage(zombieImage, 3200 - bk_x, 600, 200, 200, null); // second Zombie
+        //g2d.drawImage(zombieImage, 1200 - backgroundX, 600, 200, 200, null); // first Zombie
+        //g2d.drawImage(zombieImage, 3200 - backgroundX, 600, 200, 200, null); // second Zombie
     }
 
     // ///////////////////////////////////// WEAPON FUNCTIONS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -472,8 +472,10 @@ public class GamePanel extends JPanel implements ActionListener
     {
         for (Bullet b : bullets)
         {
-            if (b.getType() == 1) // straight
-            {
+           int type = b.getType();
+           switch(type)
+              //straight
+               case 1:
                 if (b.getDir() == 0)
                 {
                     b.move(-30, 0);
@@ -482,10 +484,9 @@ public class GamePanel extends JPanel implements ActionListener
                 {
                     b.move(30, 0);
                 }
-
-            }
-            else if (b.getType() == 2) // angle up
-            {
+                break;
+            // angle up
+            case 2:
                 if (b.getDir() == 0)
                 {
                     b.move(-30, -2);
@@ -494,9 +495,8 @@ public class GamePanel extends JPanel implements ActionListener
                 {
                     b.move(30, -2);
                 }
-            }
-            else if (b.getType() == 3) // angle down
-            {
+                break;
+            case 3:
                 if (b.getDir() == 0)
                 {
                     b.move(-30, 2);
@@ -505,11 +505,13 @@ public class GamePanel extends JPanel implements ActionListener
                 {
                     b.move(30, 2);
                 }
-            }
-            else if (b.getType() == 4) //zombie bullet
-            {
-                b.move(-30, 0);
-            }
+                break;
+            //zombie bullet
+            case 4:
+               b.move(-30, 0);
+               break;
+            default:
+               break;
         }
     }
 
