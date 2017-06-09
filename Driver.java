@@ -1,7 +1,7 @@
 package game;
 import javax.swing.JFrame;
 
-public class main extends JFrame
+public class Driver extends JFrame
 {
     GamePanel gp = new GamePanel();
     Menu menu = new Menu();
