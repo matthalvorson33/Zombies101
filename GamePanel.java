@@ -33,7 +33,7 @@ public class GamePanel extends JPanel implements ActionListener
     private final transient Image shotgun = new ImageIcon("images/shotgunRight.png").getImage(); // pew pew
     private final transient Image gun1Right = new ImageIcon("images/gun1.png").getImage(); // pew pew
     private final transient Image shotgunRight = new ImageIcon("images/shotgun.png").getImage(); // pew pew
-
+    private final transient Image box = new ImageIcon("images/box.png").getImage();
     int gun = 1; // keeps track of gun type
 
     int spitMax, spitTimer;
@@ -65,7 +65,8 @@ public class GamePanel extends JPanel implements ActionListener
     ArrayList<Zombie> zombies = new ArrayList<Zombie>();
     ArrayList<Bullet> bullets = new ArrayList<Bullet>();
     ArrayList<Integer> ammo = new ArrayList<Integer>(); //keeps track of ammo left for each gun
-
+    ArrayList<Ammo_Box> boxes = new ArrayList<Ammo_Box>();
+    
     public GamePanel()
     {
         spitTimer = 0;
@@ -77,6 +78,7 @@ public class GamePanel extends JPanel implements ActionListener
 
         initZombies();
         initGuns();
+        initBoxes();
 
         addKeyListener(new KeyAdapter() // Movement
         {
@@ -257,6 +259,7 @@ public class GamePanel extends JPanel implements ActionListener
         drawAmmo(g2d);
         drawScore(g2d);
         drawLives(g2d);
+        drawBoxes(g2d);
 
         if (player.getLives() < 1)
         {
@@ -455,6 +458,7 @@ public class GamePanel extends JPanel implements ActionListener
         {
             if (b.getType() == 4)
             {
+            	//System.out.println(b.getXPos());
                 g2d.drawImage(spitImage, b.getXPos(), b.getYPos(), 40, 20, null);
             }
             else
@@ -540,6 +544,16 @@ public class GamePanel extends JPanel implements ActionListener
         g2d.drawString(str, 900, 30);
     }
 
+    void drawBoxes(Graphics g2d)
+    {
+    	for(Ammo_Box b: boxes)
+    	{
+    		System.out.print(b.getXPos());
+    		System.out.println(player.getXPos());
+            g2d.drawImage(gun1, b.getXPos(), b.getYPos(), 100, 100, null);
+    	}
+    }
+    
     // ///////////////////////////////////// ZOMBIE FUNCTIONS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     void initZombies()
     {
@@ -555,6 +569,16 @@ public class GamePanel extends JPanel implements ActionListener
         zombies.add(z5);
         Zombie z6 = new Zombie(6000, 600, rand.nextInt(20) + 10);
         zombies.add(z6);
+    }
+    
+    void initBoxes()
+    {
+    	Ammo_Box box1 = new Ammo_Box(200, 600);
+    	boxes.add(box1);
+    	Ammo_Box box2 = new Ammo_Box(3000, 500);
+    	boxes.add(box2);
+    	Ammo_Box box3 = new Ammo_Box(4500, 500);
+    	boxes.add(box3);
     }
 
     public void setZombieNum(int num)
