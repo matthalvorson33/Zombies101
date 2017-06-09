@@ -90,7 +90,6 @@ public class Menu extends JPanel {
 			img = ImageIO.read(new File("images/zombies101.png"));
 		}catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
 			throw new IOException(e);
 		}
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
