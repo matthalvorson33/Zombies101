@@ -19,7 +19,7 @@ public class GamePanel extends JPanel implements ActionListener
 {
     Random rand = new Random();
     // Creating images for single objects
-    private final transient Image background = new ImageIcon("images/lib_long.png").getImage(); // Background Image
+    private final transient Image backImg = new ImageIcon("images/lib_long.png").getImage(); // Background Image
     private final transient Image stillRight = new ImageIcon("images/player.png").getImage(); // Standing still
     private final transient Image stillLeft = new ImageIcon("images/playerleft.png").getImage(); // Walking left
     private final transient Image walkRight = new ImageIcon("images/playerright.png").getImage(); // Walking right
@@ -39,10 +39,10 @@ public class GamePanel extends JPanel implements ActionListener
 
     transient Image obj = stillRight; // Temporary Image reference
 
-    private static final int backgroundMinX = 900;
-    private static final int backgroundMaxX = 10800; // Min and Max of background
-    private int backgroundX = 695; // background x and y coordinates
-    private int backgroundY = 800;
+    private static final int backgroundMinx = 900;
+    private static final int backgroundMaxx = 10800; // Min and Max of background
+    private int backgroundXval = 695; // background x and y coordinates
+    private int backgroundYval = 800;
 
     private int score = 1000;
 
@@ -181,7 +181,7 @@ public class GamePanel extends JPanel implements ActionListener
         {
             Bullet bullet = iter.next();
 
-            if (bullet.getXPos() > backgroundMaxX)
+            if (bullet.getXPos() > backgroundMaxx)
             {
                 iter.remove();
             }
@@ -316,9 +316,9 @@ public class GamePanel extends JPanel implements ActionListener
 
     void left()
     {
-        if (moveableLeft && backgroundX > backgroundMinX)
+        if (moveableLeft && backgroundXval > backgroundMinx)
         {
-            backgroundX -= 8; // increasing xcoord while moving right
+            backgroundXval -= 8; // increasing xcoord while moving right
             player.setImage(stillLeft);
             player.setImageNum(1);
             for (Zombie z : zombies)
@@ -330,9 +330,9 @@ public class GamePanel extends JPanel implements ActionListener
 
     void right()
     {
-        if (moveableRight && backgroundX < backgroundMaxX - 800)
+        if (moveableRight && backgroundXval < backgroundMaxx - 800)
         {
-            backgroundX += 8; // increasing xcoord while moving right
+            backgroundXval += 8; // increasing xcoord while moving right
             player.setImage(walkRight);
             player.setImageNum(2);
             for (Zombie z : zombies)
@@ -399,7 +399,7 @@ public class GamePanel extends JPanel implements ActionListener
     // ////////////////////////////////////// DRAW FUNCTIONS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     void setBackground(Graphics g2d)
     {
-        g2d.drawImage(background, 700 - backgroundX, 0, null); // Drawing background relative to character
+        g2d.drawImage(backImg, 700 - backgroundXval, 0, null); // Drawing background relative to character
     }
 
     void setZombies(Graphics g2d)
