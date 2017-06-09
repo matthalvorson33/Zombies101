@@ -15,8 +15,7 @@ public class main extends JFrame
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
         boolean done = false;
-		while(done == false){
-			System.out.print("");
+		while(!done){
         	if (menu.getPlay()) 
         	{
         		remove(menu);
@@ -36,8 +35,8 @@ public class main extends JFrame
 
     public static void main(String[] args)
     {
-        main rz = new main();
-        if (close == true) {
+        new main();
+        if (close) {
         	System.exit(0);
         }
     }// end main
