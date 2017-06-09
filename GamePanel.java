@@ -470,9 +470,8 @@ public class GamePanel extends JPanel implements ActionListener
         for (Bullet b : bullets)
         {
            int type = b.getType();
-			  boolean left = (b.getDir() == 0)
+			  boolean left = (b.getDir() == 0);
            switch(type) {
-              //straight
                case 1:
                 if (left)
                 {
@@ -483,9 +482,8 @@ public class GamePanel extends JPanel implements ActionListener
                     b.move(30, 0);
                 }
                 break;
-            // angle up
-            case 2:
-                if (left)
+            	case 2:
+               if (left)
                 {
                     b.move(-30, -2);
                 }
