@@ -284,27 +284,25 @@ public class GamePanel extends JPanel implements ActionListener
     // /////////////////////////////// DIRECTION CONDITIONS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     void doJump() // jump mechanism
     {
-
-        if (moveableDown)
+    	if (!moveableDown)
+    		return;
+    	
+    	player.setImage(jumpImg);
+        if (jump && player.getYPos() >= 450) // For upward motion during jump
         {
-        	player.setImage(jumpImg);
-            if (jump && player.getYPos() >= 450) // For upward motion during jump
-            {
-            	player.setImageNum(jumpright ? 2 : 1);
+        	player.setImageNum(jumpright ? 2 : 1);
 
-                player.move(0, -2);
-                if (player.getYPos() <= 450)
-                {
-                    jump = false;
-                }
-            }
-            if (!jump && player.getYPos() < 615) // For downward motion during jump
+            player.move(0, -2);
+            if (player.getYPos() <= 450)
             {
-            	player.setImageNum(jumpright ? 2 : 1);
-                player.move(0, 2);
+                jump = false;
             }
         }
-
+        if (!jump && player.getYPos() < 615) // For downward motion during jump
+        {
+        	player.setImageNum(jumpright ? 2 : 1);
+            player.move(0, 2);
+        }
     }
 
     void left()
