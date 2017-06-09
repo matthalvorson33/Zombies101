@@ -1,7 +1,6 @@
 package game;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -9,41 +8,35 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Iterator;
-
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-import javax.swing.Timer;
 import java.util.Random;
+import javax.swing.ImageIcon;
+import javax.swing.JPanel;
+import javax.swing.Timer;
 
-class GamePanel extends JPanel implements ActionListener
+public class GamePanel extends JPanel implements ActionListener
 {
-	Random rand = new Random();
+    Random rand = new Random();
     // Creating images for single objects
     private final Image rz_background = new ImageIcon("images/lib_long.png").getImage(); // Background Image
     private final Image rz_still_right = new ImageIcon("images/player.png").getImage(); // Standing still
     private final Image rz_still_left = new ImageIcon("images/playerleft.png").getImage(); // Walking left
     private final Image rz_walk_left2 = new ImageIcon("images/player.png").getImage(); //
     private final Image rz_walk_right2 = new ImageIcon("images/playerright.png").getImage(); // Walking right
-    private final Image rz_jump_right = new ImageIcon("images/playerjump.png").getImage(); // jumping
-    private final Image rz_jump_left = new ImageIcon("images/playerjump.png").getImage(); //
+    private final Image rz_jump = new ImageIcon("images/playerjump.png").getImage(); // jumping
     private final Image zombieImage = new ImageIcon("images/zombieleft.png").getImage(); // pipe
     private final Image playerhurt = new ImageIcon("images/playerhurt.png").getImage(); // hurt player
     private final Image spitImage = new ImageIcon("images/spitImage.png").getImage(); // zombie bullet
-    
-    private final Image bulletImage = new ImageIcon("images/bullet.png").getImage(); // pew pew
+
+    private final Image bulletImage = new ImageIcon("images/bullet.png").getImage(); // pew pew <-- Solid, useful comments here. Good work.
     private final Image gun1 = new ImageIcon("images/gun1_right.png").getImage(); // pew pew
     private final Image shotgun = new ImageIcon("images/shotgun_right.png").getImage(); // pew pew
     private final Image gun1_right = new ImageIcon("images/gun1.png").getImage(); // pew pew
     private final Image shotgun_right = new ImageIcon("images/shotgun.png").getImage(); // pew pew
-    
-    
+
     int gun = 1; // keeps track of gun type
-   
+
     int spitMax, spitTimer;
 
     Image obj = rz_still_right; // Temporary Image reference
@@ -65,13 +58,14 @@ class GamePanel extends JPanel implements ActionListener
 
     static boolean pause = false;
 
+    int zombiesDrawn = 0; //For loop testing purposes
+
     Player player = new Player(300, 615);
 
     //Collections
     ArrayList<Zombie> zombies = new ArrayList<Zombie>();
     ArrayList<Bullet> bullets = new ArrayList<Bullet>();
     ArrayList<Integer> ammo = new ArrayList<Integer>(); //keeps track of ammo left for each gun
-
 
     public GamePanel()
     {
@@ -81,10 +75,10 @@ class GamePanel extends JPanel implements ActionListener
         time = new Timer(30, this); // starting a timer and passing the
         // actionlistener for the running animation
         time.start(); // starting
-        
+
         initZombies();
         initGuns();
-        
+
         addKeyListener(new KeyAdapter() // Movement
         {
             public void keyPressed(KeyEvent kp)
@@ -116,13 +110,13 @@ class GamePanel extends JPanel implements ActionListener
                         }
                     }
                 }
-                if(kp.getKeyCode() == KeyEvent.VK_SHIFT)
+                if (kp.getKeyCode() == KeyEvent.VK_SHIFT)
                 {
-                	shoot();
+                    shoot();
                 }
-                if(kp.getKeyCode() == KeyEvent.VK_C)
+                if (kp.getKeyCode() == KeyEvent.VK_C)
                 {
-                	toggle_gun();
+                    toggle_gun();
                 }
             } // end keyPressed
 
@@ -158,8 +152,10 @@ class GamePanel extends JPanel implements ActionListener
         spitTimer++;
         if (spitTimer == spitMax)
         {
-           if (zombies.size() != 0)
-               zombieShoot(0);
+            if (zombies.size() != 0)
+            {
+                zombieShoot(0);
+            }
             spitTimer = 0;
             spitMax = rand.nextInt(30) + 25;
         }
@@ -172,36 +168,36 @@ class GamePanel extends JPanel implements ActionListener
 
     public void zombieShoot(int ind)
     {
-      Zombie shooter = zombies.get(ind);
-    	Bullet b = new Bullet(shooter.getXPos()+10, shooter.getYPos() + 25, 4, 1);
-      bullets.add(b);
+        Zombie shooter = zombies.get(ind);
+        Bullet b = new Bullet(shooter.getXPos() + 10, shooter.getYPos() + 25, 4, 1);
+        bullets.add(b);
     }
-    
+
     public void checkCollisions()
     {
-    	Iterator<Bullet> iter = bullets.iterator();
-    	while(iter.hasNext())
-    	{
-    		Bullet bullet = iter.next();
-            
-            if(bullet.getXPos() > BKMAX_X)
+        Iterator<Bullet> iter = bullets.iterator();
+        while (iter.hasNext())
+        {
+            Bullet bullet = iter.next();
+
+            if (bullet.getXPos() > BKMAX_X)
             {
-               iter.remove();
+                iter.remove();
             }
-            
+
             if (player.getHitbox().intersects(bullet.getHitbox()))
             {
-                iter.remove(); 
+                iter.remove();
                 player.decrementHealth();
             }
 
             Iterator<Zombie> zombie_iter = zombies.iterator();
-            while(zombie_iter.hasNext())
+            while (zombie_iter.hasNext())
             {
-            	Zombie zombie = zombie_iter.next();
+                Zombie zombie = zombie_iter.next();
                 if (zombie.getHitbox().intersects(bullet.getHitbox()) && bullet.getType() != 4)
                 {
-                	iter.remove();
+                    iter.remove();
                     zombie.decrementHealth();
                     if (zombie.getLives() == 0)
                     {
@@ -211,15 +207,15 @@ class GamePanel extends JPanel implements ActionListener
                 }
             }
         }
-        
+
         for (Zombie zombie : zombies)
         {
 
-        	if(player.getHitbox().intersects(zombie.getHitbox()))
-        	{
-        		System.out.println("ouch ");
-        		player.decrementHealth();
-        	}
+            if (player.getHitbox().intersects(zombie.getHitbox()))
+            {
+                System.out.println("ouch ");
+                player.decrementHealth();
+            }
         }
     }
 
@@ -243,13 +239,15 @@ class GamePanel extends JPanel implements ActionListener
         //to turn razmazio in normal still state after jump
         if (player.getYPos() == 615 & player.getDirection() != 3 & player.getDirection() != 2)
         {
-            if (player.getImage() == rz_jump_left)
+            if (player.getImage() == rz_jump && player.getImageNum() == 1)
             {
+                System.out.println("setting to still left");
                 player.setImage(rz_still_left);
                 player.setImageNum(1);
             }
-            if (player.getImage() == rz_jump_right)
+            if (player.getImage() == rz_jump && player.getImageNum() == 2)
             {
+                System.out.println("setting to still right");
                 player.setImage(rz_still_right);
                 player.setImageNum(0);
             }
@@ -259,17 +257,17 @@ class GamePanel extends JPanel implements ActionListener
         drawAmmo(g2d);
         drawScore(g2d);
         drawLives(g2d);
-        
-        if(player.getLives() < 1)
+
+        if (player.getLives() < 1)
         {
-        	game_over(g2d);
+            game_over(g2d);
         }
-        
-        if(zombies.isEmpty())
+
+        if (zombies.isEmpty())
         {
-        	level_cleared(g2d);
+            level_cleared(g2d);
         }
-        
+
         repaint();
     }
 
@@ -283,12 +281,12 @@ class GamePanel extends JPanel implements ActionListener
             {
                 if (jumpright == true)
                 {
-                    player.setImage(rz_jump_right);
+                    player.setImage(rz_jump);
                     player.setImageNum(2);
                 }
                 else
                 {
-                    player.setImage(rz_jump_left);
+                    player.setImage(rz_jump);
                     player.setImageNum(1);
                 }
 
@@ -302,12 +300,12 @@ class GamePanel extends JPanel implements ActionListener
             {
                 if (jumpright == true)
                 {
-                    player.setImage(rz_jump_right);
+                    player.setImage(rz_jump);
                     player.setImageNum(2);
                 }
                 else
                 {
-                    player.setImage(rz_jump_left);
+                    player.setImage(rz_jump);
                     player.setImageNum(1);
                 }
                 player.move(0, 2);
@@ -323,9 +321,9 @@ class GamePanel extends JPanel implements ActionListener
             bk_x -= 8; // increasing xcoord while moving right
             player.setImage(rz_still_left);
             player.setImageNum(1);
-            for(Zombie z : zombies)
+            for (Zombie z : zombies)
             {
-            	z.move(8, 0);
+                z.move(8, 0);
             }
         }
     }
@@ -337,65 +335,65 @@ class GamePanel extends JPanel implements ActionListener
             bk_x += 8; // increasing xcoord while moving right
             player.setImage(rz_walk_right2);
             player.setImageNum(2);
-            for(Zombie z : zombies)
+            for (Zombie z : zombies)
             {
-            	z.move(-8, 0);
+                z.move(-8, 0);
             }
         }// end if
     }// end right
-    
+
     void shoot()
     {
-    	if(gun == 0) // gun 1
-    	{
-    		int ammoGun1 = ammo.get(0);
-    		if(ammoGun1 > 0) //if there's ammo left
-    		{
-    			if(player.getImageNum() == 1)
-    			{
-        			Bullet b = new Bullet(player.getXPos() - 40, player.getYPos() + 75, 1, 0);
-                	bullets.add(b);
-    			}
-    			else
-    			{
-        			Bullet b = new Bullet(player.getXPos()+200, player.getYPos() + 75, 1, 1);
-                	bullets.add(b);
-    			}
-            	ammo.set(0, ammoGun1 -1);  // update ammo
-    		   score -= 10;
-         }
-    		
-    	}
-    	else if (gun == 1) //shotgun
-    	{
-    		int ammoShotgun = ammo.get(1);
-    		if(ammoShotgun > 0)  // if there's ammo left
-    		{
-    			if(player.getImageNum() == 1)
-    			{
-        			Bullet b1 = new Bullet(player.getXPos()-40, player.getYPos() + 75, 1, 0);
-                	bullets.add(b1);
-                	Bullet b2 = new Bullet(player.getXPos()-40, player.getYPos() + 75, 2, 0);
-                	bullets.add(b2);
-                	Bullet b3 = new Bullet(player.getXPos()-40, player.getYPos() + 75, 3, 0);
-                	bullets.add(b3);	
-    			}
-    			else
-    			{
-        			Bullet b1 = new Bullet(player.getXPos()+200, player.getYPos() + 75, 1, 1);
-                	bullets.add(b1);
-                	Bullet b2 = new Bullet(player.getXPos()+200, player.getYPos() + 75, 2, 1);
-                	bullets.add(b2);
-                	Bullet b3 = new Bullet(player.getXPos()+200, player.getYPos() + 75, 3, 1);
-                	bullets.add(b3);	
-    			}
+        if (gun == 0) // gun 1
+        {
+            int ammoGun1 = ammo.get(0);
+            if (ammoGun1 > 0) //if there's ammo left
+            {
+                if (player.getImageNum() == 1)
+                {
+                    Bullet b = new Bullet(player.getXPos() - 40, player.getYPos() + 75, 1, 0);
+                    bullets.add(b);
+                }
+                else
+                {
+                    Bullet b = new Bullet(player.getXPos() + 200, player.getYPos() + 75, 1, 1);
+                    bullets.add(b);
+                }
+                ammo.set(0, ammoGun1 - 1);  // update ammo
+                score -= 10;
+            }
 
-            	ammo.set(1, ammoShotgun -1);  // update ammo
-    		   score -= 10;
-         }
-    		
-    	}
-    	
+        }
+        else if (gun == 1) //shotgun
+        {
+            int ammoShotgun = ammo.get(1);
+            if (ammoShotgun > 0)  // if there's ammo left
+            {
+                if (player.getImageNum() == 1)
+                {
+                    Bullet b1 = new Bullet(player.getXPos() - 40, player.getYPos() + 75, 1, 0);
+                    bullets.add(b1);
+                    Bullet b2 = new Bullet(player.getXPos() - 40, player.getYPos() + 75, 2, 0);
+                    bullets.add(b2);
+                    Bullet b3 = new Bullet(player.getXPos() - 40, player.getYPos() + 75, 3, 0);
+                    bullets.add(b3);
+                }
+                else
+                {
+                    Bullet b1 = new Bullet(player.getXPos() + 200, player.getYPos() + 75, 1, 1);
+                    bullets.add(b1);
+                    Bullet b2 = new Bullet(player.getXPos() + 200, player.getYPos() + 75, 2, 1);
+                    bullets.add(b2);
+                    Bullet b3 = new Bullet(player.getXPos() + 200, player.getYPos() + 75, 3, 1);
+                    bullets.add(b3);
+                }
+
+                ammo.set(1, ammoShotgun - 1);  // update ammo
+                score -= 10;
+            }
+
+        }
+
     }
 
     // ////////////////////////////////////// DRAW FUNCTIONS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -406,134 +404,143 @@ class GamePanel extends JPanel implements ActionListener
 
     void setZombies(Graphics g2d)
     {
-    	for(Zombie z : zombies)
-    	{
-    		g2d.drawImage(zombieImage, z.getXPos(), z.getYPos(), 200, 200, null);
-    	}
+        zombiesDrawn = 0;
+        for (Zombie z : zombies)
+        {
+            zombiesDrawn++;
+            g2d.drawImage(zombieImage, z.getXPos(), z.getYPos(), 200, 200, null);
+        }
         //g2d.drawImage(zombieImage, 1200 - bk_x, 600, 200, 200, null); // first Zombie
         //g2d.drawImage(zombieImage, 3200 - bk_x, 600, 200, 200, null); // second Zombie
     }
-    
-    
+
     // ///////////////////////////////////// WEAPON FUNCTIONS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    
     void initGuns()
     {
         setFont(new java.awt.Font("Veranda", 1, 24));
         ammo.add(50); //gun1
         ammo.add(20); //shotgun
     }
-    
+
     void drawGun(Graphics g2d)
     {
-    	if(gun == 0) //handgun
-    	{
-    		if(player.getImageNum() == 1) //draw left gun
-    		{
-    			g2d.drawImage(gun1, player.getXPos()-20, player.getYPos() + 75, 50, 50, null);	
-    		}
-    		else // draw right gun
-    		{
-    			g2d.drawImage(gun1_right, player.getXPos() + 175, player.getYPos() + 75, 50, 50, null);
-    		}
-    				
-    	}
-    	else if (gun == 1) // shotgun
-    	{
-    		if(player.getImageNum() == 1) // draw left gun
-    		{
-    			g2d.drawImage(shotgun, player.getXPos() - 100, player.getYPos() + 75, 150, 50, null);	
-    		}
-    		else  //draw right gun
-    		{
-    			g2d.drawImage(shotgun_right, player.getXPos() + 175, player.getYPos() + 75, 150, 50, null);
-        	}	
-    	}
-    }
-    
-    void drawBullets(Graphics g2d)
-    {
-    	for(Bullet b: bullets)
-    	{
-         if (b.getType() == 4)
-         {
-            g2d.drawImage(spitImage, b.getXPos(), b.getYPos(), 40, 20, null);
-         }
-         else {
-    		   g2d.drawImage(bulletImage, b.getXPos(), b.getYPos(), 40, 20, null);
-         }
-    	}
-    }
-    
-    void moveBullets()
-    {
-    	for(Bullet b: bullets)
-    	{
-    		if(b.getType() == 1) // straight
-    		{
-    			if(b.getDir() == 0)
-    			{
-    				b.move(-30, 0);	
-    			}
-    			else
-    			{
-    				b.move(30, 0);
-    			}
-    				
-    		}
-    		else if (b.getType() == 2) // angle up
-    		{
-    			if(b.getDir() == 0)
-    			{
-    				b.move(-30, -2);	
-    			}
-    			else
-    			{
-    				b.move(30, -2);
-    			}
-    		}
-    		else if (b.getType() == 3) // angle down
-    		{
-    			if(b.getDir() == 0)
-    			{
-    				b.move(-30, 2);	
-    			}
-    			else
-    			{
-    				b.move(30, 2);
-    			}
-    		}
-         else if (b.getType() == 4) //zombie bullet
-         {
-            b.move (-30, 0);
-         }
-    	}
-    }
-    
-    void toggle_gun()
-    {
-    	gun = (gun+1) % 2;
-    }
-    
-    void drawAmmo(Graphics g2d)
-    {
-    	String str = "Ammo: " + Integer.toString(ammo.get(gun));
-    	g2d.drawString(str, 30, 30);
-    }
-    
-    void drawScore(Graphics g2d)
-    {
-      String str = "Score: " + Integer.toString(score);
-      g2d.drawString(str, 200, 30);
-    }
-    
-    void drawLives(Graphics g2d)
-    {
-    	String str = "Lives: " + Integer.toString(player.getLives());
-    	g2d.drawString(str, 900, 30);
+        if (gun == 0) //handgun
+        {
+            if (player.getImageNum() == 1) //draw left gun
+            {
+                g2d.drawImage(gun1, player.getXPos() - 20, player.getYPos() + 75, 50, 50, null);
+            }
+            else // draw right gun
+            {
+                g2d.drawImage(gun1_right, player.getXPos() + 175, player.getYPos() + 75, 50, 50, null);
+            }
+
+        }
+        else if (gun == 1) // shotgun
+        {
+            if (player.getImageNum() == 1) // draw left gun
+            {
+                g2d.drawImage(shotgun, player.getXPos() - 100, player.getYPos() + 75, 150, 50, null);
+            }
+            else  //draw right gun
+            {
+                g2d.drawImage(shotgun_right, player.getXPos() + 175, player.getYPos() + 75, 150, 50, null);
+            }
+        }
     }
 
- // ///////////////////////////////////// ZOMBIE FUNCTIONS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    void drawBullets(Graphics g2d)
+    {
+        for (Bullet b : bullets)
+        {
+            if (b.getType() == 4)
+            {
+                g2d.drawImage(spitImage, b.getXPos(), b.getYPos(), 40, 20, null);
+            }
+            else
+            {
+                g2d.drawImage(bulletImage, b.getXPos(), b.getYPos(), 40, 20, null);
+            }
+        }
+    }
+
+    void moveBullets()
+    {
+        for (Bullet b : bullets)
+        {
+            if (b.getType() == 1) // straight
+            {
+                if (b.getDir() == 0)
+                {
+                    b.move(-30, 0);
+                }
+                else
+                {
+                    b.move(30, 0);
+                }
+
+            }
+            else if (b.getType() == 2) // angle up
+            {
+                if (b.getDir() == 0)
+                {
+                    b.move(-30, -2);
+                }
+                else
+                {
+                    b.move(30, -2);
+                }
+            }
+            else if (b.getType() == 3) // angle down
+            {
+                if (b.getDir() == 0)
+                {
+                    b.move(-30, 2);
+                }
+                else
+                {
+                    b.move(30, 2);
+                }
+            }
+            else if (b.getType() == 4) //zombie bullet
+            {
+                b.move(-30, 0);
+            }
+        }
+    }
+
+    void toggle_gun()
+    {
+        gun = (gun + 1) % 2;
+    }
+
+    public int getZombiesDrawn()
+    {
+        return zombiesDrawn;
+    }
+
+    void drawAmmo(Graphics g2d)
+    {
+        String str = "Ammo: " + Integer.toString(ammo.get(gun));
+        g2d.setColor(Color.GRAY);
+        g2d.drawString(str, 30, 30);
+    }
+
+    void drawScore(Graphics g2d)
+    {
+        String str = "Score: " + Integer.toString(score);
+        g2d.setColor(Color.GRAY);
+        g2d.drawString(str, 200, 30);
+    }
+
+    void drawLives(Graphics g2d)
+    {
+        String str = "Lives: " + Integer.toString(player.getLives() > 0 ? player.getLives() : 0);
+        g2d.setColor(Color.GRAY);
+        g2d.drawString(str, 900, 30);
+    }
+
+    // ///////////////////////////////////// ZOMBIE FUNCTIONS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     void initZombies()
     {
         Zombie z1 = new Zombie(1200, 600, rand.nextInt(20) + 10);
@@ -549,47 +556,73 @@ class GamePanel extends JPanel implements ActionListener
         Zombie z6 = new Zombie(6000, 600, rand.nextInt(20) + 10);
         zombies.add(z6);
     }
-    
+
+    public void setZombieNum(int num)
+    {
+        System.out.println("num = " + num);
+        if (num < zombies.size())
+        {
+            int cycles = zombies.size() - num;
+            for (int i = 0; i < cycles; i++)
+            {
+                zombies.remove(0);
+            }
+        }
+        else if (num > zombies.size())
+        {
+            int cycles = num - zombies.size();
+            for (int i = 0; i < cycles; i++)
+            {
+                spawnRandomZombie();
+            }
+        }
+
+    }
+
+    public void spawnRandomZombie()
+    {
+        zombies.add(new Zombie(rand.nextInt(6000), 600, rand.nextInt(20) + 10));
+    }
+
     void moveZombies()
     {
-    	for(Zombie z : zombies)
-    	{
-    		if(z.getUpdown() == 1)
-    		{
-    			z.move(0, z.getSpeed()*-1);
-    			if(z.getYPos() < 15)
-    			{
-    				z.updown = 0;
-    			}
-    		}
-    		else
-    		{
-    			z.move(0, z.getSpeed());
-    			if(z.getYPos() > 585)
-    			{
-    				z.updown = 1;
-    			}
-    		}
-    	}
+        for (Zombie z : zombies)
+        {
+            if (z.getUpdown() == 1)
+            {
+                z.move(0, z.getSpeed() * -1);
+                if (z.getYPos() < 15)
+                {
+                    z.updown = 0;
+                }
+            }
+            else
+            {
+                z.move(0, z.getSpeed());
+                if (z.getYPos() > 585)
+                {
+                    z.updown = 1;
+                }
+            }
+        }
     }
-    
+
     //////////////////////////// GAME OVER \\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    
     public void game_over(Graphics g2d)
     {
-    	g2d.fillRect(200, 200, 600, 500);
-    	g2d.setColor(Color.WHITE);
-    	g2d.drawString("GAME OVER!!!", 420, 300);
-    	g2d.drawString("You are Dead", 420, 400);
-    	
+        g2d.fillRect(200, 200, 600, 500);
+        g2d.setColor(Color.WHITE);
+        g2d.drawString("GAME OVER!!!", 420, 300);
+        g2d.drawString("You are Dead", 420, 400);
+
     }
-    
+
     public void level_cleared(Graphics g2d)
     {
-    	g2d.fillRect(200, 200, 600, 500);
-    	g2d.setColor(Color.WHITE);
-    	g2d.drawString("LEVEL CLEARED!!!", 420, 300);
-    	String str = "Your score: " + Integer.toString(score);
-    	g2d.drawString(str, 420, 400);
+        g2d.fillRect(200, 200, 600, 500);
+        g2d.setColor(Color.WHITE);
+        g2d.drawString("LEVEL CLEARED!!!", 420, 300);
+        String str = "Your score: " + Integer.toString(score);
+        g2d.drawString(str, 420, 400);
     }
 }

@@ -1,4 +1,5 @@
 package game;
+
 import java.awt.Rectangle;
 
 /*
@@ -26,8 +27,7 @@ public class Zombie extends Moveable
     @Override
     public Rectangle getHitbox()
     {
-        //TODO update this with actual dimensions of the picture
-        return new Rectangle(xPos, yPos, 20, 100);
+        return new Rectangle(xPos, yPos, 50, 200);
     }
 
     public void decrementHealth()
@@ -39,15 +39,15 @@ public class Zombie extends Moveable
     {
         return lives;
     }
-    
+
     public int getSpeed()
     {
-    	return speed;
+        return speed;
     }
-    
+
     public int getUpdown()
     {
-    	return updown;
+        return updown;
     }
 
 }
