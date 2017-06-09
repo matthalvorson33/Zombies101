@@ -39,10 +39,9 @@ public class GamePanel extends JPanel implements ActionListener
 
     transient Image obj = stillRight; // Temporary Image reference
 
-    private static final int backgroundMinx = 900;
-    private static final int backgroundMaxx = 10800; // Min and Max of background
-    private int backgroundXval = 695; // background x and y coordinates
-    private int backgroundYval = 800;
+    private static final int BACKGROUNDMINX = 900;
+    private static final int BACKGROUNDMAXX = 10800; // Min and Max of background
+    private int backgroundXval = 695; // background x coordinate
 
     private int score = 1000;
 
@@ -80,7 +79,11 @@ public class GamePanel extends JPanel implements ActionListener
         initGuns();
         initBoxes();
 
-        addKeyListener(new KeyAdapter() // Movement
+        addKeyListener(newAdapter());
+    }// end constructor
+    
+    public KeyAdapter newAdapter() {
+    	new KeyAdapter() // Movement
         {
            @Override
             public void keyPressed(KeyEvent kp)
@@ -98,8 +101,8 @@ public class GamePanel extends JPanel implements ActionListener
                 }
                 if (kp.getKeyCode() == KeyEvent.VK_SPACE && !jump && player.getYPos() == 615)
                 {
-                     jump = true;
-                     moveableDown = true;
+                     jump = !jump;
+                     moveableDown = jump;
                      if (player.getDirection() == 2)
                      {
                          jumpright = true;
@@ -115,7 +118,7 @@ public class GamePanel extends JPanel implements ActionListener
                 }
                 if (kp.getKeyCode() == KeyEvent.VK_C)
                 {
-                    toggle_gun();
+                    toggleGun();
                 }
             } // end keyPressed
 
@@ -134,8 +137,8 @@ public class GamePanel extends JPanel implements ActionListener
                 }
                 player.setDirection(0); // set still image
             }
-        });// end anonymous class and KeyListener
-    }// end constructor
+        };// end anonymous class and KeyListener
+    }
 
     // ///////////////////////////// TIMED ACTION LISTENER \\\\\\\\\\\\\\\\\\\\\\\
     @Override
@@ -181,7 +184,7 @@ public class GamePanel extends JPanel implements ActionListener
         {
             Bullet bullet = iter.next();
 
-            if (bullet.getXPos() > backgroundMaxx)
+            if (bullet.getXPos() > BACKGROUNDMAXX)
             {
                 iter.remove();
             }
@@ -200,11 +203,11 @@ public class GamePanel extends JPanel implements ActionListener
                 {
                     iter.remove();
                     zombie.decrementHealth();
-                    if (zombie.getLives() == 0)
-                    {
-                        zombieIterator.remove();
-                        score += 100;
-                    }
+                }
+                if (zombie.getLives() == 0)
+                {
+                    zombieIterator.remove();
+                    score += 100;
                 }
             }
         }
@@ -235,7 +238,7 @@ public class GamePanel extends JPanel implements ActionListener
         drawBullets(g2d);
 
         // checking jump collision and enemy death
-        jump();
+        doJump();
 
         //to turn razmazio in normal still state after jump
         if (player.getYPos() == 615 & player.getDirection() != 3 & player.getDirection() != 2)
@@ -260,19 +263,19 @@ public class GamePanel extends JPanel implements ActionListener
 
         if (player.getLives() < 1)
         {
-            game_over(g2d);
+            gameOver(g2d);
         }
 
         if (zombies.isEmpty())
         {
-            level_cleared(g2d);
+            levelCleared(g2d);
         }
 
         repaint();
     }
 
     // /////////////////////////////// DIRECTION CONDITIONS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    void jump() // jump mechanism
+    void doJump() // jump mechanism
     {
 
         if (moveableDown)
@@ -293,7 +296,7 @@ public class GamePanel extends JPanel implements ActionListener
                 player.move(0, -2);
                 if (player.getYPos() <= 450)
                 {
-                    jump = false;
+                    jump = !jump;
                 }
             }
             if (!jump && player.getYPos() < 615) // For downward motion during jump
@@ -316,7 +319,7 @@ public class GamePanel extends JPanel implements ActionListener
 
     void left()
     {
-        if (moveableLeft && backgroundXval > backgroundMinx)
+        if (moveableLeft && backgroundXval > BACKGROUNDMINX)
         {
             backgroundXval -= 8; // increasing xcoord while moving right
             player.setImage(stillLeft);
@@ -330,7 +333,7 @@ public class GamePanel extends JPanel implements ActionListener
 
     void right()
     {
-        if (moveableRight && backgroundXval < backgroundMaxx - 800)
+        if (moveableRight && backgroundXval < BACKGROUNDMAXX - 800)
         {
             backgroundXval += 8; // increasing xcoord while moving right
             player.setImage(walkRight);
@@ -455,7 +458,6 @@ public class GamePanel extends JPanel implements ActionListener
         {
             if (b.getType() == 4)
             {
-            	//System.out.println(b.getXPos());
                 g2d.drawImage(spitImage, b.getXPos(), b.getYPos(), 40, 20, null);
             }
             else
@@ -470,37 +472,25 @@ public class GamePanel extends JPanel implements ActionListener
         for (Bullet b : bullets)
         {
            int type = b.getType();
-			  boolean left = (b.getDir() == 0);
+		   boolean left = b.getDir() == 0;
            switch(type) {
                case 1:
                 if (left)
-                {
                     b.move(-30, 0);
-                }
                 else
-                {
                     b.move(30, 0);
-                }
                 break;
             	case 2:
                if (left)
-                {
                     b.move(-30, -2);
-                }
                 else
-                {
                     b.move(30, -2);
-                }
                 break;
             case 3:
                 if (left)
-                {
                     b.move(-30, 2);
-                }
                 else
-                {
                     b.move(30, 2);
-                }
                 break;
             //zombie bullet
             case 4:
@@ -512,7 +502,7 @@ public class GamePanel extends JPanel implements ActionListener
         }
     }
 
-    void toggle_gun()
+    void toggleGun()
     {
         gun = (gun + 1) % 2;
     }
@@ -547,8 +537,6 @@ public class GamePanel extends JPanel implements ActionListener
     {
     	for(Ammo_Box b: boxes)
     	{
-    		System.out.print(b.getXPos());
-    		System.out.println(player.getXPos());
             g2d.drawImage(gun1, b.getXPos(), b.getYPos(), 100, 100, null);
     	}
     }
@@ -630,7 +618,7 @@ public class GamePanel extends JPanel implements ActionListener
     }
 
     //////////////////////////// GAME OVER \\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    public void game_over(Graphics g2d)
+    public void gameOver(Graphics g2d)
     {
         g2d.fillRect(200, 200, 600, 500);
         g2d.setColor(Color.WHITE);
@@ -639,7 +627,7 @@ public class GamePanel extends JPanel implements ActionListener
 
     }
 
-    public void level_cleared(Graphics g2d)
+    public void levelCleared(Graphics g2d)
     {
         g2d.fillRect(200, 200, 600, 500);
         g2d.setColor(Color.WHITE);
