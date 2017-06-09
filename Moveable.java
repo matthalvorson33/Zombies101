@@ -4,7 +4,8 @@ import java.awt.Rectangle;
 //This interface is for all objects that can move
 public abstract class Moveable
 {
-    int xPos, yPos;
+    int xPos;
+    int yPos;
 
     public Moveable(int x, int y)
     {
