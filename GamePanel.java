@@ -110,22 +110,7 @@ public class GamePanel extends JPanel implements ActionListener
     			break;
     		}
         }
-    		private void swap() {
-	            if (!jump && player.getYPos() == 615)
-	            {
-	                 jump = !jump;
-	                 moveableDown = jump;
-	                 if (player.getDirection() == 2)
-	                 {
-	                     jumpright = true;
-	                 }
-	                 if (player.getDirection() == 3)
-	                 {
-	                     jumpright = false;
-	                 }
-	            }
-            }
-        } // end keyPressed
+    	
 
         @Override
         public void keyReleased(KeyEvent kr)
@@ -142,7 +127,23 @@ public class GamePanel extends JPanel implements ActionListener
             }
             player.setDirection(0); // set still image
         }
-    }
+    		private void swap() {
+	            if (!jump && player.getYPos() == 615)
+	            {
+	                 jump = !jump;
+	                 moveableDown = jump;
+	                 if (player.getDirection() == 2)
+	                 {
+	                     jumpright = true;
+	                 }
+	                 if (player.getDirection() == 3)
+	                 {
+	                     jumpright = false;
+	                 }
+	            }
+            }
+        }
+
 
     // ///////////////////////////// TIMED ACTION LISTENER \\\\\\\\\\\\\\\\\\\\\\\
     @Override
