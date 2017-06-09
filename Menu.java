@@ -24,7 +24,7 @@ public class Menu extends JPanel {
 	private int height;
 	public static final int SCALE = 3;
 	public static final String NAME = "Zombies101";
-	private final transient BufferedImage img;
+	private transient BufferedImage img;
 	protected backgroundPanel container;
 	public boolean playGame;
 	public boolean exitGame;
