@@ -22,7 +22,6 @@ public class GamePanel extends JPanel implements ActionListener
     private final transient Image background = new ImageIcon("images/lib_long.png").getImage(); // Background Image
     private final transient Image stillRight = new ImageIcon("images/player.png").getImage(); // Standing still
     private final transient Image stillLeft = new ImageIcon("images/playerleft.png").getImage(); // Walking left
-    private final transient Image walkLeft = new ImageIcon("images/player.png").getImage(); //
     private final transient Image walkRight = new ImageIcon("images/playerright.png").getImage(); // Walking right
     private final transient Image jumpImg = new ImageIcon("images/playerjump.png").getImage(); // jumping
     private final transient Image zombieImage = new ImageIcon("images/zombieleft.png").getImage(); // pipe
@@ -33,14 +32,15 @@ public class GamePanel extends JPanel implements ActionListener
     private final transient Image shotgun = new ImageIcon("images/shotgunRight.png").getImage(); // pew pew
     private final transient Image gun1Right = new ImageIcon("images/gun1.png").getImage(); // pew pew
     private final transient Image shotgunRight = new ImageIcon("images/shotgun.png").getImage(); // pew pew
-    private final transient Image box = new ImageIcon("images/box.png").getImage();
     int gun = 1; // keeps track of gun type
 
-    int spitMax, spitTimer;
+    int spitMax;
+    int spitTimer;
 
     transient Image obj = stillRight; // Temporary Image reference
 
-    private static final int BackgroundMinX = 900, BackgroundMaxX = 10800; // Min and Max of background
+    private static final int backgroundMinX = 900;
+    private static final int backgroundMaxX = 10800; // Min and Max of background
     private int backgroundX = 695; // background x and y coordinates
     private int backgroundY = 800;
 
@@ -96,21 +96,18 @@ public class GamePanel extends JPanel implements ActionListener
                 {
                     player.setDirection(3); // left
                 }
-                if (kp.getKeyCode() == KeyEvent.VK_SPACE)
+                if (kp.getKeyCode() == KeyEvent.VK_SPACE && !jump && player.getYPos() == 615)
                 {
-                    if (!jump && player.getYPos() == 615)
-                    {
-                        jump = true;
-                        moveableDown = true;
-                        if (player.getDirection() == 2)
-                        {
-                            jumpright = true;
-                        }
-                        if (player.getDirection() == 3)
-                        {
-                            jumpright = false;
-                        }
-                    }
+                     jump = (1 == 1);
+                     moveableDown = (1 == 1);
+                     if (player.getDirection() == 2)
+                     {
+                         jumpright = true;
+                     }
+                     if (player.getDirection() == 3)
+                     {
+                         jumpright = false;
+                     }
                 }
                 if (kp.getKeyCode() == KeyEvent.VK_SHIFT)
                 {
@@ -184,7 +181,7 @@ public class GamePanel extends JPanel implements ActionListener
         {
             Bullet bullet = iter.next();
 
-            if (bullet.getXPos() > BackgroundMaxX)
+            if (bullet.getXPos() > backgroundMaxX)
             {
                 iter.remove();
             }
@@ -319,7 +316,7 @@ public class GamePanel extends JPanel implements ActionListener
 
     void left()
     {
-        if (moveableLeft && backgroundX > BackgroundMinX)
+        if (moveableLeft && backgroundX > backgroundMinX)
         {
             backgroundX -= 8; // increasing xcoord while moving right
             player.setImage(stillLeft);
@@ -333,7 +330,7 @@ public class GamePanel extends JPanel implements ActionListener
 
     void right()
     {
-        if (moveableRight && backgroundX < BackgroundMaxX - 800)
+        if (moveableRight && backgroundX < backgroundMaxX - 800)
         {
             backgroundX += 8; // increasing xcoord while moving right
             player.setImage(walkRight);
@@ -473,7 +470,7 @@ public class GamePanel extends JPanel implements ActionListener
         for (Bullet b : bullets)
         {
            int type = b.getType();
-           switch(type){
+           switch(type)
               //straight
                case 1:
                 if (b.getDir() == 0)
@@ -512,7 +509,6 @@ public class GamePanel extends JPanel implements ActionListener
                break;
             default:
                break;
-           }
         }
     }
 
