@@ -217,7 +217,7 @@ public class GamePanel extends JPanel implements ActionListener
             Zombie zombie = zombieIterator.next();
             if (zombie.getHitbox().intersects(bullet.getHitbox()) && bullet.getType() != 4)
             {
-                ret = true
+                ret = true;
                 zombie.decrementHealth();
             }
             if (zombie.getLives() == 0)
