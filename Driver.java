@@ -1,4 +1,6 @@
 package game;
+import java.io.IOException;
+
 import javax.swing.JFrame;
 
 public class Driver extends JFrame
@@ -6,7 +8,7 @@ public class Driver extends JFrame
     GamePanel gp = new GamePanel();
     Menu menu = new Menu();
     static boolean close;
-    main()
+    Driver() throws IOException
     {
     	close = false;
     	add(menu);
@@ -34,9 +36,9 @@ public class Driver extends JFrame
         
     }
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws IOException
     {
-        new main();
+        new Driver();
         if (close) {
         	System.exit(0);
         }
