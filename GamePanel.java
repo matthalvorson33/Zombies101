@@ -45,16 +45,16 @@ public class GamePanel extends JPanel implements ActionListener
 
     private int score = 1000;
 
-    static boolean moveableRight = true; // variable for collision detection
-    static boolean moveableLeft = true;
-    static boolean moveableDown = false;
+    boolean moveableRight = true; // variable for collision detection
+    boolean moveableLeft = true;
+    boolean moveableDown = false;
 
     boolean jumpright = true;
 
-    static boolean jump = false; // For jump
+    boolean jump = false; // For jump
     private Timer time;
 
-    static boolean pause = false;
+    boolean pause = false;
 
     int zombiesDrawn = 0; //For loop testing purposes
 
@@ -195,21 +195,8 @@ public class GamePanel extends JPanel implements ActionListener
                 player.decrementHealth();
             }
 
-            Iterator<Zombie> zombieIterator = zombies.iterator();
-            while (zombieIterator.hasNext())
-            {
-                Zombie zombie = zombieIterator.next();
-                if (zombie.getHitbox().intersects(bullet.getHitbox()) && bullet.getType() != 4)
-                {
-                    iter.remove();
-                    zombie.decrementHealth();
-                }
-                if (zombie.getLives() == 0)
-                {
-                    zombieIterator.remove();
-                    score += 100;
-                }
-            }
+            if (checkZombies(bullet))
+            	iter.remove();
         }
 
         for (Zombie zombie : zombies)
@@ -220,6 +207,26 @@ public class GamePanel extends JPanel implements ActionListener
                 player.decrementHealth();
             }
         }
+    }
+    
+    public boolean checkZombies(Bullet bullet) {
+    	boolean ret = false;
+    	Iterator<Zombie> zombieIterator = zombies.iterator();
+        while (zombieIterator.hasNext())
+        {
+            Zombie zombie = zombieIterator.next();
+            if (zombie.getHitbox().intersects(bullet.getHitbox()) && bullet.getType() != 4)
+            {
+                ret = true
+                zombie.decrementHealth();
+            }
+            if (zombie.getLives() == 0)
+            {
+                zombieIterator.remove();
+                score += 100;
+            }
+        }
+        return ret;
     }
 
     // ////////////////////////////////// PAINT FUNCTION \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -280,37 +287,20 @@ public class GamePanel extends JPanel implements ActionListener
 
         if (moveableDown)
         {
+        	player.setImage(jumpImg);
             if (jump && player.getYPos() >= 450) // For upward motion during jump
             {
-                if (jumpright)
-                {
-                    player.setImage(jumpImg);
-                    player.setImageNum(2);
-                }
-                else
-                {
-                    player.setImage(jumpImg);
-                    player.setImageNum(1);
-                }
+            	player.setImageNum(jumpright ? 2 : 1);
 
                 player.move(0, -2);
                 if (player.getYPos() <= 450)
                 {
-                    jump = !jump;
+                    jump = false;
                 }
             }
             if (!jump && player.getYPos() < 615) // For downward motion during jump
             {
-                if (jumpright)
-                {
-                    player.setImage(jumpImg);
-                    player.setImageNum(2);
-                }
-                else
-                {
-                    player.setImage(jumpImg);
-                    player.setImageNum(1);
-                }
+            	player.setImageNum(jumpright ? 2 : 1);
                 player.move(0, 2);
             }
         }
