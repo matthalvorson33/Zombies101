@@ -13,8 +13,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -77,18 +75,17 @@ public class Menu extends JPanel {
 		container = new BackgroundPanel();
 		container.setAlignmentX(CENTER_ALIGNMENT);
 		container.setAlignmentY(CENTER_ALIGNMENT);
-		container.setPreferredSize(new Dimension(640, 480));
+		
 		playGame = false;
-		/**JPanel panel1 = new JPanel();
-		JPanel panel2 = new JPanel();
 		
-		container.add(panel1);
-		container.add(panel2);**/
-		
+		container.setPreferredSize(new Dimension(640, 480));
 		
 		try {
+			
 			img = ImageIO.read(new File("images/zombies101.png"));
+			
 		}catch (IOException e) {
+			
 			throw new IOException(e);
 		}
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -98,23 +95,21 @@ public class Menu extends JPanel {
 		 play.setAlignmentY(CENTER_ALIGNMENT);
 		 play.setPreferredSize(new Dimension(150, 150));
 
-		 play.addActionListener(e -> {
-			 playGame = true;
-		 });
+		 play.addActionListener(e -> playGame = true);
 		 
 		 JButton dif = new JButton("Change Difficulty");
 		 dif.setAlignmentX(CENTER_ALIGNMENT);
 		 dif.setAlignmentY(CENTER_ALIGNMENT);
 		 dif.setPreferredSize(new Dimension(150, 150));
 
-		 dif.addActionListener(e -> { difficultychange = true;});
+		 dif.addActionListener(e -> difficultychange = true);
 		 
 		 JButton exit = new JButton("Exit");
 		 exit.setAlignmentX(CENTER_ALIGNMENT);
 		 exit.setAlignmentY(CENTER_ALIGNMENT);
 		 exit.setPreferredSize(new Dimension(100, 150));
 
-		 exit.addActionListener(e -> {exitGame = true;});
+		 exit.addActionListener(e -> exitGame = true);
 		 
 		 add(play);
 		 add(Box.createRigidArea(new Dimension(0, 40)));
