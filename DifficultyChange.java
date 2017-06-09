@@ -35,6 +35,10 @@ public class DifficultyChange extends JPanel {
 		return difficulty;
 	}
 	
+	public boolean getGameOn() {
+		return playGame;
+	}
+	
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
