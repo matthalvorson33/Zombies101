@@ -79,10 +79,10 @@ public class GamePanel extends JPanel implements ActionListener
         initGuns();
         initBoxes();
 
-        addKeyListener(new keyAdapter());
+        addKeyListener(new MyKeyAdapter());
     }// end constructor
     
-    public class keyAdapter extends KeyAdapter {
+    public class MyKeyAdapter extends KeyAdapter {
     	@Override
         public void keyPressed(KeyEvent kp)
         {
