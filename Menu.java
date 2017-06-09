@@ -153,8 +153,11 @@ public class Menu extends JPanel {
 	
 	//Button with an icon
 	public void addButton(String name, JPanel p, String imgURL){
-	     imgURL = name;
-		 JButton button = new JButton(imgURL);
+	     String newFinalString = "";
+	     name = imgURL;
+		 newFinalString = imgURL;
+	     
+		 JButton button = new JButton(newFinalString);
 		 p.add(button);
 	}
 	
