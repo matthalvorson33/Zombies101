@@ -25,7 +25,7 @@ public class Menu extends JPanel {
 	public static final int SCALE = 3;
 	public static final String NAME = "Zombies101";
 	private transient BufferedImage img;
-	protected backgroundPanel container;
+	protected BackgroundPanel container;
 	private boolean playGame;
 	private boolean exitGame;
 	private boolean difficultychange = false;
@@ -74,7 +74,7 @@ public class Menu extends JPanel {
 		heightUsed = SCALE;
 		widthUsed = getPixelDepth(widthUsed, heightUsed);
 		heightUsed = manipulatePixels(2, 3);
-		container = new backgroundPanel();
+		container = new BackgroundPanel();
 		container.setAlignmentX(CENTER_ALIGNMENT);
 		container.setAlignmentY(CENTER_ALIGNMENT);
 		container.setPreferredSize(new Dimension(640, 480));
@@ -89,7 +89,6 @@ public class Menu extends JPanel {
 		try {
 			img = ImageIO.read(new File("images/zombies101.png"));
 		}catch (IOException e) {
-			// TODO Auto-generated catch block
 			throw new IOException(e);
 		}
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -99,42 +98,23 @@ public class Menu extends JPanel {
 		 play.setAlignmentY(CENTER_ALIGNMENT);
 		 play.setPreferredSize(new Dimension(150, 150));
 
-		 play.addActionListener(new ActionListener() {
-	      @Override
-	      public void actionPerformed(ActionEvent e)
-	      {
-	        // display/center the jdialog when the button is pressed
-	        playGame = true;
-	      }
-	    });
+		 play.addActionListener(e -> {
+			 playGame = true;
+		 });
 		 
 		 JButton dif = new JButton("Change Difficulty");
 		 dif.setAlignmentX(CENTER_ALIGNMENT);
 		 dif.setAlignmentY(CENTER_ALIGNMENT);
 		 dif.setPreferredSize(new Dimension(150, 150));
 
-		 dif.addActionListener(new ActionListener() {
-		 @Override
-	     public void actionPerformed(ActionEvent e)
-	      {
-	        // display/center the jdialog when the button is pressed
-	    	 difficultychange = true;
-	      }
-	    });
+		 dif.addActionListener(e -> { difficultychange = true;});
 		 
 		 JButton exit = new JButton("Exit");
 		 exit.setAlignmentX(CENTER_ALIGNMENT);
 		 exit.setAlignmentY(CENTER_ALIGNMENT);
 		 exit.setPreferredSize(new Dimension(100, 150));
 
-		 exit.addActionListener(new ActionListener() {
-			 @Override
-		      public void actionPerformed(ActionEvent e)
-		      {
-		        // display/center the jdialog when the button is pressed
-		        exitGame = true;
-		      }
-		    });
+		 exit.addActionListener(e -> {exitGame = true;});
 		 
 		 add(play);
 		 add(Box.createRigidArea(new Dimension(0, 40)));
@@ -158,7 +138,7 @@ public class Menu extends JPanel {
 		 p.add(buttonTwo);
 	}
 	
-	public class backgroundPanel extends JPanel
+	public class BackgroundPanel extends JPanel
 	{
 		@Override
 	    public void paintComponent(Graphics g)
